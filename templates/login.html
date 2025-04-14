@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://source.unsplash.com/random/1600x900/?blue,abstract') no-repeat center center/cover;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        .icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            color: gray;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 25px;
+            border: 1px solid black;
+            cursor: pointer;
+            font-size: 16px;
+            background: white;
+        }
+        .btn:hover {
+            background: #f5f5f5;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: gray;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">❤️</div>
+        <h2>Welcome User,</h2>
+        <p><strong>Sign-in</strong><br>to SymptomSense</p>
+        <button class="btn">With GOOGLE</button>
+        <div class="divider">or</div>
+        <button class="btn">With E-mail</button>
+    </div>
+</body>
+</html>

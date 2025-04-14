@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}SymptomSense{% endblock %}
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Linking Google fonts for items -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+<!-- Linking SwiperJS CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{% endblock %}
+
+{% block content %}
+    <!-- HOME SECTION -->
+    <section class="home" id="home">
+        <div class="home-text">
+            <h1>Find the right Prognosis for your symptoms</h1>
+            <p>Your symptoms, our guidance</p>
+            <div class="latter">
+                <div class="main-btn">
+                    <a href="{{ url_for('formdemo') }}" class="btn">Get Recommendations</a>
+                </div>
+            </div>
+        </div>
+        <div class="home-img">
+            <img src="{{ url_for('static', filename='images/doctor.png') }}">
+        </div>
+    </section>
+
+    <!-- FEATURE SECTION -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f1.png') }}" alt="Health Quest" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f1">Health Quest</span>
+                        <h2 class="feature-title">Fun challenges and Streak tracking</h2>
+                        <p class="feature-description">Set goals, track progress, and stay healthy with engaging wellness challenges!</p>
+                        <a href="{{ url_for('healthQuest') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f2.png') }}" alt="MediTrack" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f2">Medi Track</span>
+                        <h2 class="feature-title">Complete Medicine Guide</h2>
+                        <p class="feature-description">Comprehensive medicine information with uses, side effects, and a built-in reminder system.</p>
+                        <a href="{{ url_for('mediTrack') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f3.png') }}" alt="CareConnect" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f3">Care Connect</span>
+                        <h2 class="feature-title">Healthcare Access Simplified</h2>
+                        <p class="feature-description">Find nearby hospitals, book appointments, and leave feedback for better healthcare.</p>
+                        <a href="{{ url_for('careConnect') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f4.png') }}" alt="CycleSync" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f4">Cycle Sync</span>
+                        <h2 class="feature-title">Personalized Wellness Tracking</h2>
+                        <p class="feature-description">Smart tracker for cycle predictions, wellness tips, and hormonal balance diet advice.</p>
+                        <a href="{{ url_for('cycleSync') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f5.png') }}" alt="VitalCert Academy" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f5">VitalCert Academy</span>
+                        <h2 class="feature-title">Health Certification Program</h2>
+                        <p class="feature-description">Earn recognized health certifications with easy-to-follow courses from trusted partners.</p>
+                        <a href="{{ url_for('vitalCert') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f6.png') }}" alt="HealthHive" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f6">Health Hive</span>
+                        <h2 class="feature-title">Community Health Hub<pre>
+                        </pre></h2>
+                        <p class="feature-description">Join a supportive community for expert tips, vlogs, and myth-busting health facts.</p>
+                        <a href="#" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f8.png') }}" alt="HealthLens AI" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f8">HealthLens AI</span>
+                        <h2 class="feature-title">AI-Powered Symptom Analysis</h2>
+                        <p class="feature-description">Smart tool that analyzes symptoms and offers educational insights.</p>
+                        <a href="{{ url_for('formdemo') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img src="{{ url_for('static', filename='images/f7.png') }}" alt="MindMate" class="feature-image">
+                    <div class="feature-content">
+                        <span class="feature-badge f7">MindMate</span>
+                        <h2 class="feature-title">Mental Health Companion</h2>
+                        <p class="feature-description">AI chatbot that tracks mood, provides emotional support, and suggests stress-relief techniques.</p>
+                        <a href="{{ url_for('chatbot') }}" class="feature-link">
+                            <span class="material-symbols-rounded">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% block extra_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    {% endblock %}
+
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <!-- <div class="about-img">
+            <img src="images/about.png">
+        </div> -->
+
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>At SymptomSense, we harness AI to make healthcare smarter, more accessible, and engaging. Our platform provides AI-driven symptom analysis, offering preliminary health insights by cross-referencing medical databases.
+                We integrate mental health support with an AI chatbot, mood tracking, and stress management tools. Users can also access medicine information, menstrual tracking, and wellness challenges to stay informed and proactive about their health.
+                Beyond diagnosis, our community-driven approach allows users to share health experiences, while clinics and professionals provide verified insights. We also offer certifications in health education, helping users learn and grow.
+                With features like voice search and location-based clinic recommendations, we ensure accessibility for all, including those with disabilities. Whether you're seeking medical guidance, mental wellness support, or an interactive health community, SymptomSense is your trusted AI-powered healthcare companion.
+                <br><br>
+                🚀 Join us in shaping the future of digital healthcare!
+            </p>
+            
+            <a href="#" class="btn">Read More</a>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="main-contact">
+            <div class="contact-content">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+            </div>
+
+            <div class="contact-content">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Category</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </div>
+
+            <div class="contact-content">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Register</a></li>
+                <li><a href="#">Instructor</a></li>
+                <li><a href="#">Dashboard</a></li>
+            </div>
+<!-- 
+            <div class="contact-content">
+                <li><a href="#">India,<br> New Delhi, CA 94108</a></li>
+                <li><a href="#">abc@gmail.com</a></li>
+                <li><a href="#">7368081739</a></li>
+            </div> -->
+        </div>
+    </section>
+    
+    <div class="last-text">
+        <p> 2025 SymptomSense. All rights reserved.</p>
+    </div>
+{% endblock %}
+
+

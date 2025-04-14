@@ -1,0 +1,24 @@
+
+<script>
+    function openNewpage() {
+        window.location.href = "{{ url_for('login') }}"; // Change to your target page
+    }
+</script>
+<link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet">
+<nav class="navbar">
+<div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/2544/2544036.png" alt="logo">
+    SYMPTOMSENSE
+</div>
+    <ul>
+        <li><a href="{{ url_for('home') }}">HOME</a></li>
+        <li><a href="#">COMMUNITY</a></li>
+        <li><a href="{{ url_for('chatbot') }}">MIND MATE</a></li>
+    </ul>
+            
+    <div class="buttons">
+        <button>Sign-in</button>
+        <button class="cta-button" onclick="openNewpage()">Login</button>
+                
+    </div>
+</nav>

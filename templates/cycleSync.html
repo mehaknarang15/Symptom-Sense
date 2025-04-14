@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <style>
+        /* Your existing CSS styles remain unchanged */
+        :root {
+            --primary-blue: #1a73e8;
+            --secondary-blue: #4285f4;
+            --light-blue: #e8f0fe;
+            --dark-blue: #174ea6;
+            --hover-blue: #cfe1fd;
+            
+            --menstruation: #7986cb;
+            --predicted: #9fa8da;
+            --ovulation: #5c6bc0;
+            --fertile: #7e57c2;
+            --accent: #b39ddb;
+            
+            --nav-bg: #4BA3DA;
+            --button-bg: black;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Inter', sans-serif;
+            list-style: none;
+            text-decoration: none;
+            scroll-behavior: smooth;
+        }
+
+        .header {
+            background-color: white;
+            border-bottom: 1px solid #dadce0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 50px;
+            padding: 15px 20px;
+            margin-top:60px;
+        }
+
+        body {
+            padding: 0 ;
+            margin:0;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #d4d7f2 100%) ;
+            color: #202124 ;
+            height: 100vh ;
+            overflow-x: hidden ;
+            display: flex ;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: var(--nav-bg);
+            width: 100%;
+            height: 60px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: black;  /* Set "SymptomSense" text color to black */
+        }
+
+        .logo img {
+            width: 35px;
+            height: auto;
+            margin-right: 12px;
+        }
+
+        .navbar ul {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar ul li {
+            display: inline-block;
+        }
+
+        .navbar ul li a {
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* ===== BUTTONS STYLING ===== */
+        .navbar .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .buttons button {
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 80px;
+        }
+
+        .navbar .buttons .sign-in {
+            background: white;
+            color: var(--button-bg);
+            border: 2px solid var(--button-bg);
+        }
+
+/* Responsive Navbar */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .navbar .buttons {
+        margin-top: 10px;
+    }
+}
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px); 
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 320px;
+            background: white;
+            padding: 20px;
+            border-right: 1px solid #dadce0;
+            overflow-y: auto;
+        }
+        
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+        }
+        
+        .header h1 {
+            color: var(--primary-blue);
+            font-size: 20px;
+            margin: 0;
+        }
+        
+        .panel {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 20px;
+        }
+        
+        h3 {
+            color: var(--dark-blue);
+            margin-top: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--light-blue);
+            font-size: 16px;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #5f6368;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            padding: 8px 10px;
+            border: 2px solid #dadce0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            margin-bottom: 12px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        
+        button {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 15px 0 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #tipsContainer{
+            margin-bottom: 0;
+        }
+        
+        button:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .calendar-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .calendar-month {
+            border: 1px solid #dadce0;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            min-width: 280px;
+            max-width: 320px;
+        }
+        
+        .month-title {
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+        
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        
+        .weekday {
+            font-weight: 600;
+            color: #5f6368;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        
+        .day {
+            padding: 8px 3px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-size: 13px;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        
+        .day:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+        
+        .today {
+            border: 2px solid var(--primary-blue);
+            font-weight: bold;
+        }
+        
+        .menstruation { 
+            background: var(--menstruation); 
+            color: white; 
+        }
+        
+        .predicted-period { 
+            background: var(--predicted); 
+            color: white; 
+        }
+        
+        .ovulation { 
+            background: var(--fertile); 
+            color: white; 
+        }
+        
+        .ovulation-day { 
+            background: var(--ovulation); 
+            color: white; 
+            font-weight: bold; 
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+        
+        .legend-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-box {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 3px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .tip {
+            background: var(--light-blue);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .tip:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .phase-menstrual .stat-value {
+            color: var(--menstruation);
+        }
+        
+        .phase-ovulation .stat-value {
+            color: var(--ovulation);
+        }
+        
+        .phase-luteal .stat-value {
+            color: var(--fertile);
+        }
+        
+        .phase-follicular .stat-value {
+            color: var(--primary-blue);
+        }
+        
+        #moodTip {
+            border-left-color: var(--menstruation);
+        }
+        
+        #nutritionTip {
+            border-left-color: var(--ovulation);
+        }
+        
+        #exerciseTip {
+            border-left-color: var(--fertile);
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #dadce0;
+            }
+            
+            .content-area {
+                overflow-y: visible;
+            }
+            
+            body {
+                height: auto;
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+<nav class="navbar">
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/2544/2544036.png" alt="logo">
+        SYMPTOMSENSE
+    </div>
+        <ul>
+            <li><a href="/">HOME</a></li>
+            <li><a href="#">COMMUNITY</a></li>
+            <li><a href="chatbot">MIND MATE</a></li>
+        </ul>
+                
+        <div class="buttons">
+            <button>Sign-in</button>
+            <button class="cta-button" onclick="window.location.href='/login'">Login</button>
+                    
+        </div>
+    </nav>
+<body>
+    <div class="header">
+        <h1>Menstrual Cycle Tracker</h1>
+    </div>
+    
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="panel">
+                <h2>Cycle Information</h2>
+                
+                <div class="form-group">
+                    <label for="lastPeriod">Last Period Start Date:</label>
+                    <input type="date" id="lastPeriod">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cycleLength">Cycle Length (Days):</label>
+                    <input type="number" id="cycleLength" value="28" min="21" max="40">
+                </div>
+                
+                <div class="form-group">
+                    <label for="periodLength">Period Length (Days):</label>
+                    <input type="number" id="periodLength" value="5" min="2" max="10">
+                </div>
+                
+                <div class="form-group">
+                    <label for="monthsToShow">Months to Show:</label>
+                    <input type="number" id="monthsToShow" value="3" min="1" max="12">
+                </div>
+                
+                <button onclick="generateCalendars()">Update Calendar</button>
+            </div>
+            
+            <div class="panel" id="statsContainer" style="display: none;">
+                <h2>Cycle Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="nextPeriodValue">-</div>
+                        <div class="stat-label">Days Until Next Period</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="ovulationValue">-</div>
+                        <div class="stat-label">Days Until Ovulation</div>
+                    </div>
+                    <div class="stat-box" id="phaseBox">
+                        <div class="stat-value" id="cyclePhaseValue">-</div>
+                        <div class="stat-label">Current Phase</div>
+                    </div>
+                </div>
+                
+                <h3>Color Legend</h3>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-box" style="background: var(--menstruation);"></span> Menstruation</div>
+                    <div class="legend-item"><span class="legend-box" style="background: var(--predicted);"></span> Predicted Period</div>
+                    <div class="legend-item"><span class="legend-box" style="background: var(--ovulation);"></span> Ovulation Day</div>
+                    <div class="legend-item"><span class="legend-box" style="background: var(--fertile);"></span> Fertile Window</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <div class="panel" id="calendarPanel">
+                <div class="calendar-container" id="calendarContainer">
+                    <div style="text-align: center; padding: 40px; width: 100%;">
+                        <h2>Welcome to your Cycle Tracker</h2>
+                        <p>Please enter your cycle information and click "Update Calendar" to begin.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel" id="tipsContainer" style="display: none;">
+                <h2>Health & Wellness Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip" id="moodTip"></div>
+                    <div class="tip" id="nutritionTip"></div>
+                    <div class="tip" id="exerciseTip"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateCalendars() {
+            let lastPeriod = document.getElementById("lastPeriod").value;
+            let cycleLength = parseInt(document.getElementById("cycleLength").value);
+            let periodLength = parseInt(document.getElementById("periodLength").value);
+            let monthsToShow = parseInt(document.getElementById("monthsToShow").value);
+
+            if (!lastPeriod) {
+                alert("Please enter the last period start date.");
+                return;
+            }
+            
+            // Save data
+            saveData();
+
+            document.getElementById("tipsContainer").style.display = "block"; // Show tips
+            document.getElementById("statsContainer").style.display = "block"; // Show stats
+
+            // Parse last period date properly
+            let lastDate = new Date(lastPeriod + "T00:00:00"); // Fix date parsing
+            let calendarContainer = document.getElementById("calendarContainer");
+            calendarContainer.innerHTML = ""; 
+
+            let today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize today date to start of day
+            
+            // Fix calculation of days since last period
+            let daysSinceLastPeriod = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+            // Handle edge case of same day
+            if (daysSinceLastPeriod < 0) daysSinceLastPeriod = 0;
+            
+            let currentCycleDay = (daysSinceLastPeriod % cycleLength) + 1;
+            
+            // Calculate next period and ovulation
+            let daysUntilNextPeriod = cycleLength - currentCycleDay + 1;
+            if (daysUntilNextPeriod <= 0) daysUntilNextPeriod += cycleLength;
+            
+            let ovulationDay = cycleLength - 14;
+            let daysUntilOvulation = ovulationDay - currentCycleDay;
+            if (daysUntilOvulation <= 0) daysUntilOvulation += cycleLength;
+            
+            // Set stats
+            document.getElementById("nextPeriodValue").textContent = daysUntilNextPeriod;
+            document.getElementById("ovulationValue").textContent = daysUntilOvulation;
+            
+            let phaseBox = document.getElementById("phaseBox");
+            phaseBox.className = "stat-box"; // Reset classes
+            
+            // Determine current phase
+            let phase = "follicular"; // Default phase
+            
+            if (currentCycleDay <= periodLength) {
+                phase = "menstruation";
+                document.getElementById("cyclePhaseValue").textContent = "Menstrual";
+                phaseBox.classList.add("phase-menstrual");
+            } else if (currentCycleDay >= ovulationDay - 3 && currentCycleDay <= ovulationDay + 3) {
+                phase = "ovulation";
+                document.getElementById("cyclePhaseValue").textContent = "Ovulation";
+                phaseBox.classList.add("phase-ovulation");
+            } else if (currentCycleDay > ovulationDay) {
+                phase = "luteal";
+                document.getElementById("cyclePhaseValue").textContent = "Luteal";
+                phaseBox.classList.add("phase-luteal");
+            } else {
+                document.getElementById("cyclePhaseValue").textContent = "Follicular";
+                phaseBox.classList.add("phase-follicular");
+            }
+            
+            // NEW APPROACH: Instead of generating arrays of predicted dates,
+            // we'll create a map of all dates with their cycle information
+            
+            // Create a map to store all cycle data by date string
+            let cycleDayMap = new Map();
+            
+            // Calculate first period date that can affect our calendar range
+            // Go back enough cycles to make sure we cover the entire calendar range
+            let firstCycleStart = new Date(lastDate);
+            firstCycleStart.setDate(firstCycleStart.getDate() - (cycleLength * monthsToShow)); // Go back enough to cover calendar
+            
+            // Loop through enough cycles to cover our calendar range
+            let cycleStartDate = new Date(firstCycleStart);
+            let endDate = new Date(today);
+            endDate.setMonth(endDate.getMonth() + monthsToShow + 1); // Go forward enough months + buffer
+            
+            // Generate all cycle days
+            while (cycleStartDate < endDate) {
+                // For each day in the cycle
+                for (let day = 1; day <= cycleLength; day++) {
+                    let currentDate = new Date(cycleStartDate);
+                    currentDate.setDate(currentDate.getDate() + day - 1);
+                    let dateString = currentDate.toDateString();
+                    
+                    let dayData = {
+                        cycleDay: day,
+                        isPeriod: day <= periodLength,
+                        isOvulation: day === ovulationDay,
+                        isFertile: day >= ovulationDay - 3 && day <= ovulationDay + 3 && day !== ovulationDay,
+                        isPast: currentDate < today
+                    };
+                    
+                    cycleDayMap.set(dateString, dayData);
+                }
+                
+                // Move to next cycle
+                cycleStartDate.setDate(cycleStartDate.getDate() + cycleLength);
+            }
+            
+            // Generate calendars
+            let currentDate = new Date();
+            currentDate.setDate(1); // Start from the first day of current month
+            
+            for (let i = 0; i < monthsToShow; i++) {
+                let year = currentDate.getFullYear();
+                let month = currentDate.getMonth();
+                
+                let monthDiv = document.createElement("div");
+                monthDiv.className = "calendar-month";
+                
+                // Month title
+                let monthTitle = document.createElement("div");
+                monthTitle.className = "month-title";
+                monthTitle.textContent = new Date(year, month, 1).toLocaleDateString('en-US', {month: 'long', year: 'numeric'});
+                monthDiv.appendChild(monthTitle);
+                
+                // Weekday headers
+                let calendar = document.createElement("div");
+                calendar.className = "calendar";
+                
+                ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(day => {
+                    let dayElem = document.createElement("div");
+                    dayElem.className = "weekday";
+                    dayElem.textContent = day;
+                    calendar.appendChild(dayElem);
+                });
+                
+                // Get first day of month and total days
+                let firstDay = new Date(year, month, 1).getDay();
+                let daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Add empty cells for days before the first day of month
+                for (let j = 0; j < firstDay; j++) {
+                    let emptyDay = document.createElement("div");
+                    calendar.appendChild(emptyDay);
+                }
+                
+                // Add days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    let dayElem = document.createElement("div");
+                    dayElem.className = "day";
+                    dayElem.textContent = day;
+                    
+                    let currentDateCheck = new Date(year, month, day);
+                    let dateString = currentDateCheck.toDateString();
+                    
+                    // Check if this is today
+                    let isToday = dateString === today.toDateString();
+                    if (isToday) {
+                        dayElem.classList.add("today");
+                    }
+                    
+                    // Use our precomputed cycle day map to determine status
+                    if (cycleDayMap.has(dateString)) {
+                        let dayData = cycleDayMap.get(dateString);
+                        
+                        // Apply appropriate classes based on day data
+                        if (dayData.isPeriod) {
+                            // Different styling for past vs predicted periods
+                            if (dayData.isPast) {
+                                dayElem.classList.add("menstruation");
+                                dayElem.title = `Day ${dayData.cycleDay} of period`;
+                            } else {
+                                dayElem.classList.add("predicted-period");
+                                dayElem.title = "Predicted period";
+                            }
+                        } else if (dayData.isOvulation) {
+                            dayElem.classList.add("ovulation-day");
+                            dayElem.title = dayData.isPast ? "Ovulation day" : "Predicted ovulation";
+                        } else if (dayData.isFertile) {
+                            dayElem.classList.add("ovulation");
+                            dayElem.title = dayData.isPast ? "Fertile window" : "Predicted fertile window";
+                        } else if (!dayData.isPast) {
+                            // Just a regular future cycle day
+                            dayElem.title = `Predicted day ${dayData.cycleDay} of cycle`;
+                        } else {
+                            // Regular past cycle day
+                            dayElem.title = `Day ${dayData.cycleDay} of cycle`;
+                        }
+                    }
+                    
+                    calendar.appendChild(dayElem);
+                }
+                
+                monthDiv.appendChild(calendar);
+                calendarContainer.appendChild(monthDiv);
+                
+                // Move to next month
+                currentDate.setMonth(currentDate.getMonth() + 1);
+            }
+            
+            // Set tips based on phase
+            let moodTips = {
+                menstruation: "Take it easy! Gentle yoga and warm drinks can help with cramps. Self-care is essential during this time.",
+                ovulation: "You're likely feeling energized and confident. A great time for workouts and social activities!",
+                luteal: "Mood swings? Try meditation and deep breathing exercises. Focus on calming activities.",
+                follicular: "Boost your productivity and creativity with brain-stimulating activities! Your energy is building."
+            };
+
+            let nutritionTips = {
+                menstruation: "Eat iron-rich foods like spinach, lentils, and lean meats to replenish lost iron. Stay hydrated with herbal teas.",
+                ovulation: "Focus on protein and omega-3s like salmon and nuts for sustained energy. Avoid excess alcohol.",
+                luteal: "Craving sugar? Choose healthy options like dark chocolate and fruits. Increase calcium intake.",
+                follicular: "Eat antioxidant-rich foods like berries, citrus fruits, and leafy greens to support hormonal balance!"
+            };
+            
+            let exerciseTips = {
+                menstruation: "Opt for gentle movement like walking, stretching, or restorative yoga. Listen to your body's needs.",
+                ovulation: "This is a great time for higher intensity workouts and strength training. Your energy levels are naturally higher.",
+                luteal: "Balance is key - incorporate moderate cardio with stress-relieving activities like swimming or cycling.",
+                follicular: "Your energy is increasing - gradually build up workout intensity and focus on form and technique."
+            };
+
+            document.getElementById("moodTip").innerHTML = `<strong>🌿 Mood Tip:</strong> ${moodTips[phase]}`;
+            document.getElementById("nutritionTip").innerHTML = `<strong>🥗 Nutrition Tip:</strong> ${nutritionTips[phase]}`;
+            document.getElementById("exerciseTip").innerHTML = `<strong>🏃‍♀️ Exercise Tip:</strong> ${exerciseTips[phase]}`;
+        }
+        
+        // Save data when generating calendars
+        function saveData() {
+            let data = {
+                lastPeriod: document.getElementById("lastPeriod").value,
+                cycleLength: document.getElementById("cycleLength").value,
+                periodLength: document.getElementById("periodLength").value
+            };
+            localStorage.setItem("periodTrackerData", JSON.stringify(data));
+        }
+        
+        // Check if user has existing data and populate form
+        window.onload = function() {
+            let savedPeriodData = localStorage.getItem("periodTrackerData");
+            if (savedPeriodData) {
+                let data = JSON.parse(savedPeriodData);
+                document.getElementById("lastPeriod").value = data.lastPeriod;
+                document.getElementById("cycleLength").value = data.cycleLength;
+                document.getElementById("periodLength").value = data.periodLength;
+                generateCalendars();
+            }
+        };
+    </script>
+</body>
+</html>

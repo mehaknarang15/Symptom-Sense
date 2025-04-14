@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <style>
+        :root {
+            --primary-blue: #1a73e8;
+            --secondary-blue: #4285f4;
+            --light-blue: #e8f0fe;
+            --dark-blue: #174ea6;
+            --completed-green: #34a853;
+            --hover-blue: #ebf1fb;
+            --shadow: 0 4px 6px rgba(26, 115, 232, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #cfe1fd 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-blue);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            text-align: center;
+            font-size: 24px;
+        }
+        
+        h3 {
+            color: var(--dark-blue);
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 5px;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        
+        .challenge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--light-blue);
+            padding: 8px 12px;
+            margin: 6px 0;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--secondary-blue);
+        }
+        
+        .challenge:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        
+        .challenge label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .challenge input[type="checkbox"] {
+            margin-right: 10px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .completed {
+            background: #e6f4ea !important;
+            border-left: 4px solid var(--completed-green) !important;
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+        
+        button {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        button:hover {
+            background: var(--dark-blue);
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #d9e2ec;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        
+        .remove-btn {
+            background: #ea4335;
+            color: white;
+            padding: 4px 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            margin: 0;
+            box-shadow: none;
+        }
+        
+        .remove-btn:hover {
+            background: #d33426;
+        }
+        
+        .content-area {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            gap: 15px;
+        }
+        
+        .column {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .reset-btn {
+            background: #f8f9fa;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .reset-btn:hover {
+            background: var(--hover-blue);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .progress-container {
+            background: #f1f3f4;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary-blue);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .add-challenge {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        /* Custom scrollbar */
+        .column::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .column::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .column::-webkit-scrollbar-thumb {
+            background: var(--secondary-blue);
+            border-radius: 10px;
+        }
+        
+        .column::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+        
+        /* Celebration message */
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .celebration-message {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: scale(0.8);
+            transition: transform 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .celebration-message h2 {
+            color: var(--completed-green);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .celebration-message p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .celebration-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .celebration-active .celebration-message {
+            transform: scale(1);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: confetti-fall 5s ease-in-out infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+    
+    <script>
+        fetch("static/nav.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("nav-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading the navigation:", error));
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <h2>Daily Health & Mental Wellness Tracker</h2>
+        </div>
+        
+        <div class="progress-container">
+            <div id="progress-text">Your daily progress: 0%</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="column">
+                <div class="section">
+                    <h3>Health Challenges</h3>
+                    <div id="healthChallengeList"></div>
+                </div>
+            </div>
+            
+            <div class="column">
+                <div class="section">
+                    <h3>Mental Wellness Challenges</h3>
+                    <div id="mentalChallengeList"></div>
+                </div>
+            </div>
+            
+            <div class="column">
+                <div class="section">
+                    <h3>Custom Challenges</h3>
+                    <div id="customChallengeList"></div>
+                </div>
+                
+                <div class="section">
+                    <h3>Add Your Own Challenge</h3>
+                    <div class="add-challenge">
+                        <input type="text" id="customChallenge" placeholder="Enter a new challenge">
+                        <button onclick="addCustomChallenge()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="reset-btn" onclick="resetChallenges()">Reset for Next Day</button>
+        </div>
+    </div>
+    
+    <!-- Celebration Overlay -->
+    <div class="celebration-overlay" id="celebration">
+        <div class="celebration-message">
+            <h2>🎉 AMAZING JOB! 🎉</h2>
+            <p>You've completed 100% of your health and wellness challenges today! Your dedication to self-care is truly inspirational.</p>
+            <p>Remember: Small daily improvements lead to remarkable long-term results.</p>
+            <button onclick="closeCelebration()">Continue My Wellness Journey</button>
+        </div>
+    </div>
+
+    <script>
+        const healthChallenges = [
+            "Drink 8 glasses of water 💧",
+            "Walk 5,000 steps 🚶‍♂️",
+            "Eat a fruit 🍎",
+            "Do 10 minutes of stretching 🧘",
+            "Sleep at least 7 hours 😴",
+            "Limit sugar intake 🍬",
+            "Take deep breaths for 5 mins 🌿"
+        ];
+
+        const mentalChallenges = [
+            "Mindful Breathing 🌬️",
+            "Digital Detox 📵",
+            "Positive Affirmations 😊",
+            "Journaling 📝",
+            "Meditation 🧘",
+            "Connect with a Loved One 💬",
+            "Go Outside 🌿",
+            "Limit Negative News 📺",
+            "Laugh or Smile 😂",
+            "Declutter a Space 🏡",
+            "Listen to Music or a Podcast 🎵",
+            "Set Small Goals ✅",
+            "Do a Creative Activity 🎨"
+        ];
+        
+        // Variable to track if celebration was already shown today
+        let celebrationShown = false;
+
+        function loadChallenges() {
+            const healthList = document.getElementById("healthChallengeList");
+            const mentalList = document.getElementById("mentalChallengeList");
+            const customList = document.getElementById("customChallengeList");
+
+            healthList.innerHTML = "";
+            mentalList.innerHTML = "";
+            customList.innerHTML = "";
+
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+
+            [...healthChallenges].forEach((challenge, index) => {
+                let challengeDiv = createChallengeElement(challenge, "health", index);
+                healthList.appendChild(challengeDiv);
+            });
+
+            [...mentalChallenges].forEach((challenge, index) => {
+                let challengeDiv = createChallengeElement(challenge, "mental", index);
+                mentalList.appendChild(challengeDiv);
+            });
+
+            storedChallenges.custom.forEach((challenge, index) => {
+                let challengeDiv = createChallengeElement(challenge, "custom", index, true);
+                customList.appendChild(challengeDiv);
+            });
+            
+            updateProgress();
+        }
+
+        function createChallengeElement(challenge, type, index, isCustom = false) {
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+            let completedChallenges = storedChallenges.completed || [];
+
+            let challengeDiv = document.createElement("div");
+            challengeDiv.classList.add("challenge");
+            if (completedChallenges.includes(`${type}-${index}`)) {
+                challengeDiv.classList.add("completed");
+            }
+            challengeDiv.innerHTML = `
+                <label>
+                    <input type="checkbox" onchange="completeChallenge('${type}', ${index})" ${completedChallenges.includes(`${type}-${index}`) ? "checked" : ""}>
+                    ${challenge}
+                </label>
+                ${isCustom ? `<button class="remove-btn" onclick="removeCustomChallenge(${index})">✖</button>` : ""}
+            `;
+            return challengeDiv;
+        }
+
+        function completeChallenge(type, index) {
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+
+            if (!storedChallenges.completed) storedChallenges.completed = [];
+
+            let key = `${type}-${index}`;
+            if (storedChallenges.completed.includes(key)) {
+                storedChallenges.completed = storedChallenges.completed.filter(i => i !== key);
+            } else {
+                storedChallenges.completed.push(key);
+            }
+
+            localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+            loadChallenges();
+        }
+
+        function addCustomChallenge() {
+            let challengeText = document.getElementById("customChallenge").value.trim();
+            if (challengeText === "") {
+                alert("Please enter a challenge to add.");
+                return;
+            }
+
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+            storedChallenges.custom.push(challengeText);
+            localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+
+            document.getElementById("customChallenge").value = "";
+            loadChallenges();
+        }
+
+        function removeCustomChallenge(index) {
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+            
+            // Also remove from completed if it exists
+            let keyToRemove = `custom-${index}`;
+            if (storedChallenges.completed) {
+                storedChallenges.completed = storedChallenges.completed.filter(key => key !== keyToRemove);
+            }
+            
+            storedChallenges.custom.splice(index, 1);
+            localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+            loadChallenges();
+        }
+
+        function resetChallenges() {
+            if (confirm("Are you sure you want to reset your progress for today?")) {
+                let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+                storedChallenges.completed = [];  // Only reset completion, keep custom challenges
+                localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+                celebrationShown = false; // Reset celebration flag
+                loadChallenges();
+            }
+        }
+        
+        function updateProgress() {
+            let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+            let completedCount = storedChallenges.completed.length;
+            let totalChallenges = healthChallenges.length + mentalChallenges.length + (storedChallenges.custom ? storedChallenges.custom.length : 0);
+            
+            let progressPercent = totalChallenges > 0 ? Math.round((completedCount / totalChallenges) * 100) : 0;
+            
+            document.getElementById("progress-text").textContent = `Your daily progress: ${progressPercent}%`;
+            document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+            
+            // Show celebration when 100% is reached and not shown yet today
+            if (progressPercent === 100 && !celebrationShown && totalChallenges > 0) {
+                showCelebration();
+                celebrationShown = true;
+            }
+        }
+        
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.classList.add('celebration-active');
+            
+            // Add confetti effect
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+        
+        function closeCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.classList.remove('celebration-active');
+            
+            // Remove all confetti elements
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
+        }
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            
+            // Random color
+            const colors = ['#ff5252', '#ffeb3b', '#2196f3', '#4caf50', '#e040fb', '#ff9800'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.querySelector('.celebration-message').appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        window.onload = loadChallenges;
+    </script>
+
+</body>
+</html>

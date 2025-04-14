@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <script src="{{ url_for('static', filename='scripts/formScript.js') }}" defer></script>
+    <!-- <script src="static/script.js" defer></script> -->
+    <link href="{{ url_for('static', filename='styles/formStyle.css') }}" rel="stylesheet">
+
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <script>
+        // Load navigation first
+        fetch("static/nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+                
+                // Call function after the nav is inserted
+                // adjustContainerMargin();
+            })
+            .catch(error => console.error("Error loading the navigation:", error));
+</script>
+    <form>
+        <h1>Get Predictions</h1>
+        <h4 style="text-align: center; color: rgb(93, 93, 93);">Select the symptoms you are experiencing</h3>
+        <!-- Fever Section -->
+        <h2>Fever</h2>
+        <label>
+            <input type="radio" id="highfever" name="fever" onclick="feverQuestions()" class="radio"> High Fever </label>
+           <label><input type="radio" id="mildfever" name="fever" onclick="feverQuestions()"> Mild Fever
+        </label><br>
+        
+        <!-- Fever-Related Symptoms -->
+        <div id="FeverQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #fd7e14;padding-left: 10px;">
+            <h3>Fever Specifics:</h3>
+            <label><input type="checkbox"> Chills</label><br>
+            <label><input type="checkbox"> Shivering</label><br>
+            <label><input type="checkbox"> <div class="tooltip">Malaise 
+                <span class="tooltiptext">(feeling of unwellness)</span>
+              </div></label><br>
+            <label><input type="checkbox">  <div class="tooltip">toxic look <span class="tooltiptext">(typhos)(appearing extremely ill by look)</span></div></label><br>
+        </div>
+        
+        <!-- Pain Section -->
+        <h2>Pain</h2>
+        <label>
+            <input type="checkbox" id="headache" onclick="painQuestions()"> Headache </label>
+            <label><input type="checkbox" id="jointPain" onclick="painQuestions()"> Joint Pain</label>
+            <label><input type="checkbox" id="stomachPain" onclick="painQuestions()"> Stomach Pain </label>
+            <label><input type="checkbox" id="chestPain" onclick="painQuestions()"> Chest Pain</label>
+            <label><input type="checkbox" id="backPain" onclick="painQuestions()"> Back Pain
+        </label><br>
+        
+        <!-- Pain Categorization -->
+        <div id="headacheQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #28a745;padding-left: 10px;">
+            <h3>Headache Specifics:</h3>
+            <label><input type="checkbox"> Watering from eyes </label><br>
+            <label><input type="checkbox"> Blurred and distorted vision</label><br>
+            <label><input type="checkbox"> Neck pain</label><br>
+            <label><input type="checkbox"> Stiff neck</label><br>
+            <label><input type="checkbox"> Sinus pressure</label><br>
+            <label><input type="checkbox"> Pain behind the eyes</label><br> 
+        </div>
+        
+        <div id="jointPainQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #17a2b8;padding-left: 10px;">
+            <h3>Joint Pain Specifics:</h3>
+            <label><input type="checkbox"> Swelling joints</label><br>
+            <label><input type="checkbox"> Movement stiffness</label><br>
+            <label><input type="checkbox"> Hip joint pain</label><br>
+        </div>
+        
+        <div id="stomachPainQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #20c997;padding-left: 10px;">
+            <h3>Stomach Pain Specifics:</h3>
+            <label><input type="checkbox"> Nausea</label><br>
+            <label><input type="checkbox"> Vomiting</label><br>
+            <label><input type="checkbox"> Indigestion</label><br>
+        </div>
+        
+        <div id="chestPainQuestions" style="display: none; margin-top: 10px;border-left: 3px solid #e83e8c; padding-left: 10px;">
+            <h3>Chest Pain Specifics:</h3>
+            <label><input type="checkbox"> Breathlessness</label><br>
+            <label><input type="checkbox"> Fast heart rate</label><br>
+        </div>
+        
+        <div id="backPainQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #007bff; padding-left: 10px;">
+            <h3>Back Pain Specifics:</h3>
+            <!-- <label><input type="checkbox"> With urinary symptoms</label><br> -->
+            <label><input type="checkbox"> Movement stiffness</label><br>
+        </div>
+        <!-- Skin Issues Section -->
+        <h2>Skin Issues</h2>
+            <label> <input type="checkbox" id="skinRash" name="skin" onclick="skinQuestions()"> Skin Rash</label> 
+                <label><input type="checkbox" id="skinColor" name="skin" onclick="skinQuestions()"> Color Changes</label>
+                    <label><input type="checkbox" name="skin"> Itching</label>
+    <br>
+        
+        <!-- Skin Manifestations -->
+        <div id="rashQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #dc3545;padding-left: 10px;">
+            <h3>Rash Type:</h3>
+            <label><input type="checkbox"> Nodal eruptions</label><br>
+            <label><input type="checkbox"> Pus-filled pimples</label><br>
+            <label><input type="checkbox"> Blackheads</label><br>
+            <label><input type="checkbox"> Peeling skin</label><br>
+            <label><input type="checkbox"> Scurring</label><br>
+            <label><input type="checkbox"> Silver-like dusting</label><br>
+        </div>
+        
+        <div id="skinColorQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #ffc107; padding-left: 10px;">
+            <h3>Color Changes:</h3>
+            <label><input type="checkbox"> Yellowish skin</label><br>
+            <label><input type="checkbox"> Redness</label><br>
+            <label><input type="checkbox"> Paleness</label><br>
+            <label><input type="checkbox"> <div class="tooltip"> Dischromic patches<span class="tooltiptext">areas of skin that show abnormal pigmentation</span></div></label><br>
+            <label><input type="checkbox"> Bruising</label><br>
+        </div>
+        <!-- Digestive Issues Section -->
+        <h2>Digestive Issues</h2>
+            <label><input type="checkbox" id="upperGI" name="digestion" onclick="digestiveQuestions()"> Upper GastroIntestinal Issues</label>
+            <label><input type="checkbox" id="lowerGI" name="digestion" onclick="digestiveQuestions()"> Lower GastroIntestinal Issues</label>
+            <label><input type="checkbox" name="digestion"> Increased Appetite </label>
+            <label><input type="checkbox" name="digestion"> Loss of Appetite </label>
+        <br>
+        
+        <!-- Digestive System -->
+        <div id="upperGIQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #28a745;padding-left: 10px;">
+            <h3>Upper GI Symptoms:</h3>
+            <label><input type="checkbox"> Acidity</label><br>
+            <label><input type="checkbox"> <div class="tooltip">Ulcers on tongue<span class="tooltiptext"> painful sores that develop on the surface of the tongue</span></div></label><br>
+            <label><input type="checkbox"> Indigestion</label><br>
+            <label><input type="checkbox"> Nausea</label><br>
+            <label><input type="checkbox"> Vomiting</label><br>
+            <label><input type="checkbox"> Drying and tingling lips</label><br>
+        </div>
+        
+        <div id="lowerGIQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #6c757d;padding-left: 10px;">
+            <h3>Lower GI Symptoms:</h3>
+            <label><input type="checkbox"> Diarrhoea</label><br>
+            <label><input type="checkbox"> Constipation</label><br>
+            <label><input type="checkbox"> Bloody stool</label><br>
+            <label><input type="checkbox"> Abdominal pain</label><br>
+            <label><input type="checkbox">  <div class="tooltip">Distention of abdomen
+                <span class="tooltiptext">(swollen)</span>
+              </div></label><br>
+            <label><input type="checkbox"> Passage of gases</label><br>
+            <label><input type="checkbox"> Pain in anal region</label><br> 
+            <label><input type="checkbox"> Pain during bowel movements</label><br>
+            <label><input type="checkbox"> Belly pain</label><br> 
+        </div>
+        
+        <!-- Respiratory Issues Section -->
+        <h2>Respiratory Issues</h2>
+        <label>
+            <input type="checkbox" id="cough" name="respiration" onclick="respiratoryQuestions()"> Cough</label>
+            <label><input type="checkbox" id="nasal" name="respiration" onclick="respiratoryQuestions()"> Nasal Symptoms</label>
+            <label><input type="checkbox" id="throat" name="respiration" onclick="respiratoryQuestions()"> Throat Symptoms</label>
+            <label><input type="checkbox" name="respiration"> Breathlessness</label>
+        <br>
+        
+        <!-- Respiratory System -->
+        <div id="coughQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #17a2b8;padding-left: 10px;">
+            <h3>Cough Character:</h3>
+            <!-- <label><input type="checkbox"> Dry cough</label><br> -->
+            
+            
+            <label><input type="checkbox"> <div class="tooltip">Phlegm<span class="tooltiptext">Phlegm - thick substance that is produced in your nose</span></div></label><br>
+            <label><input type="checkbox"> <div class="tooltip">Mucoid sputum<span class="tooltiptext">Sputum - Material brought up while coughing</span></div></label><br>
+            <label><input type="checkbox"> <div class="tooltip">Rusty sputum<span class="tooltiptext">Sputum - Material brought up while coughing</span></div></label><br>
+            <label><input type="checkbox"> <div class="tooltip">Blood in sputum<span class="tooltiptext">Sputum - Material brought up while coughing</span></div></label><br>
+        </div>
+        
+        <div id="nasalQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #fd7e14; padding-left: 10px;">
+            <h3>Nasal Symptoms:</h3>
+            <label><input type="checkbox"> Continuous sneezing</label><br>
+            <label><input type="checkbox"> Runny nose</label><br>
+            <label><input type="checkbox"> Congestion</label><br>
+        </div>
+        
+        <div id="throatQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #20c997;padding-left: 10px;">
+            <h3>Throat Symptoms:</h3>
+            <label><input type="checkbox"> Patches in throat</label><br>
+            <label><input type="checkbox"> Throat irritation</label><br>
+            <label><input type="checkbox"> <div class="tooltip">Phlegm<span class="tooltiptext">Thick, sticky mucus produced by the respiratory system</span></div></label><br>
+        </div>
+        
+        <!-- General Discomfort Section -->
+        <h2>General Discomfort</h2>
+            <label><input type="checkbox" name="digestion"> Fatigue </label>
+            <label><input type="checkbox" id="weakness" onclick="toggleQuestions()" name="digestion"> Weakness</label>
+            <label><input type="checkbox" name="digestion"> Dizziness</label>
+            <label><input type="checkbox"> Dehydration </label>
+            <label><input type="checkbox"> Lethargy </label>
+            <label><input type="checkbox"> Restlessness </label>
+                <br>
+        
+        <!-- Extra questions for weakness, initially hidden -->
+        <div id="weaknessQuestions" style="display: none; margin-top: 10px; border-left: 3px solid #e83e8c; padding-left: 10px;">
+            <h3>Mention the type of weakness:</h3>
+            <label><input type="checkbox"> Weakness in limbs</label><br>
+            <label><input type="checkbox"> Muscle weakness</label><br>
+            <label><input type="checkbox"> Weakness of one body side</label><br>
+        </div>
+        <h2>Additional Assessments</h2>
+        
+        <!-- Other System Issues -->
+        <label><input type="checkbox" id="urinaryIssues" onclick="urinaryQuestions()"> Urinary Issues</label>
+        <label><input type="checkbox" id="thyroidIssues" onclick="thyroidQuestions()"> Thyroid/Endocrine Issues</label>
+        <label><input type="checkbox" id="lymphaticIssues" onclick="lymphaticQuestions()"> Immune Issues</label>
+        <label><input type="checkbox" id="sexualIssues" onclick="sexualCluster()"> Sexual Health Concerns</label>
+        <br>
+        
+        <!-- Critical Indicators -->
+        <label><input type="checkbox" id="acuteLiver" onclick="criticalIndicators()"> Acute Liver Issues</label>
+        <label><input type="checkbox" id="coma" onclick="criticalIndicators()"> Neurological Issues</label>
+        <label><input type="checkbox" id="alcoholHistory" onclick="historyRelated()"> History Related Issues</label><br>
+
+        <!-- 3A. Neurological Cluster -->
+        <div id="neurologicalCluster" style="display: none; margin-top: 20px;  border-left: 3px solid #007bff; padding-left: 10px;">
+            <h3>Neurological Assessment:</h3>
+            <label><input type="checkbox"> <div class="tooltip">Altered sensorium
+                <span class="tooltiptext"> (memory loss, confusion, strang behaviour, disturbances)</span>
+              </div></label><br>
+            <label><input type="checkbox"> Slurred speech</label><br>
+            <label><input type="checkbox"> Lack of concentration</label><br>
+            <label><input type="checkbox"> Loss of balance</label><br>
+            <label><input type="checkbox"> Spinning movements</label><br>
+            <label><input type="checkbox"> Unsteadiness</label><br>
+            <label><input type="checkbox"> Loss of smell</label><br>
+            <label><input type="checkbox"> Visual disturbances</label><br>
+            <label><input type="checkbox"> Blurred and distorted vision</label><br>
+            <label><input type="checkbox"> Muscle weakness</label><br>
+            <label><input type="checkbox"> Muscle pain</label><br>
+        </div>
+        
+        <!-- 3B. Cardiovascular/Circulatory Cluster -->
+        <div id="cardiovascularCluster" style="display: none; margin-top: 20px; border-left: 3px solid #dc3545; padding-left: 10px;">
+            <h3>Cardiovascular Assessment:</h3>
+            <label><input type="checkbox"> Prominent veins on calf</label><br>
+            <label><input type="checkbox"> Swollen blood vessels</label><br>
+            <label><input type="checkbox"> Palpitations</label><br>
+            <label><input type="checkbox"> Fast heart rate</label><br>
+            <label><input type="checkbox"> Fluid overload</label><br>
+            <label><input type="checkbox"> Swelling of stomach</label><br>
+            <label><input type="checkbox"> Puffy face and eyes</label><br>
+            <label><input type="checkbox"> <div class="tooltip">Swollen extremities
+                 <span class="tooltiptext"> (puffiness below skin)</span>
+
+            </div></label><br>
+            <label><input type="checkbox"> Swollen legs</label><br>
+            <label><input type="checkbox"> obesity</label><br>
+        </div>
+        
+        <!-- 3C. Urinary Cluster -->
+        <div id="urinaryCluster" style="display: none; margin-top: 20px;  border-left: 3px solid #ffc107; padding-left: 10px;">
+            <h3>Urinary Assessment:</h3>
+            <label><input type="checkbox"> <div class="tooltip">Burning micturition
+                <span class="tooltiptext"> (burn while urination)</span>
+              </div> </label><br>
+            <label><input type="checkbox"> Continuous feel of urine</label><br>
+            <label><input type="checkbox"> Bladder discomfort</label><br>
+            <label><input type="checkbox"> Foul smell of urine</label><br>
+            <label><input type="checkbox"> Spotting urination</label><br>
+            <label><input type="checkbox"> Dark urine</label><br>
+            <label><input type="checkbox"> <div class="tooltip">Polyuria
+                <span class="tooltiptext">  (Abnormally large urine production)</span></div>
+              </label><br>
+            <label><input type="checkbox"> Watering from eyes</label><br>
+        </div>
+        
+        <!-- 3D. Liver/Jaundice Cluster -->
+        <div id="liverJaundiceCluster" style="display: none; margin-top: 20px;  border-left: 3px solid #28a745; padding-left: 10px;">
+            <h3>Liver/Jaundice Assessment:</h3>
+            <label><input type="checkbox"> Yellowing of eyes</label><br>
+            <label><input type="checkbox"> Yellowish skin</label><br>
+            <label><input type="checkbox"> Dark urine</label><br>
+            <!-- <label><input type="checkbox"> Acute liver failure</label><br> -->
+            <label><input type="checkbox"> Stomach bleeding</label><br>
+            <label><input type="checkbox"> Abdominal pain</label><br>
+            <label><input type="checkbox"> History of alcohol consumption</label><br>
+        </div>
+        
+        <!-- 3E. Lymphatic/Immune Cluster -->
+        <div id="lymphaticCluster" style="display: none; margin-top: 20px;  border-left: 3px solid #6c757d; padding-left: 10px;">
+            <h3>Lymphatic/Immune Assessment:</h3>
+            <label><input type="checkbox"> Swelled lymph nodes</label><br>
+            <label><input type="checkbox"> Receiving blood transfusion</label><br>
+            <label><input type="checkbox"> Receiving unsterile injections</label><br>
+            <label><input type="checkbox"> Internal itching </label><br>
+        </div>
+        
+        <!-- 3F. Thyroid/Endocrine Cluster -->
+        <div id="thyroidCluster" style="display: none; margin-top: 20px; border-left: 3px solid #17a2b8; padding-left: 10px;">
+            <h3>Thyroid/Endocrine Assessment:</h3>
+            <label><input type="checkbox"> Enlarged thyroid</label><br>
+            <label><input type="checkbox"> Brittle nails</label><br>
+            <label><input type="checkbox"> Excessive hunger</label><br>
+            <label><input type="checkbox"> Puffy face and eyes</label><br>
+            <label><input type="checkbox"> Swollen legs</label><br>
+            <label><input type="checkbox"> weight gain </label><br>
+            <label><input type="checkbox"> weight loss </label><br>
+            <label><input type="checkbox"> Abnormal menstruation</label><br>
+            <label><input type="checkbox"> Increased appetite</label><br>
+        </div>
+        
+        <!-- 3G. Musculoskeletal Cluster -->
+        <div id="musculoskeletalCluster" style="display: none; margin-top: 20px;  border-left: 3px solid #fd7e14; padding-left: 10px;">
+            <h3>Musculoskeletal Assessment:</h3>
+            <label><input type="checkbox"> Muscle wasting</label><br>
+            <label><input type="checkbox"> Knee pain</label><br>
+            <label><input type="checkbox"> Stiff neck</label><br>
+            <label><input type="checkbox"> Swelling joints</label><br>
+            <label><input type="checkbox"> Painful walking</label><br>
+        </div>
+        
+        <!-- 3H. Dermatological Specialized Cluster -->
+        <div id="dermatologicalCluster" style="display: none; margin-top: 20px; border-left: 3px solid #20c997; padding-left: 10px;">
+            <h3>Specialized Skin Assessment:</h3>
+            <label><input type="checkbox"> Nodal skin eruptions</label><br>
+            <label><input type="checkbox"> Skin peeling</label><br>
+            <label><input type="checkbox"> Red spots over body</label><br>
+            <label><input type="checkbox"> Watering from eyes</label><br>
+            <label><input type="checkbox"> Blister</label><br>
+            <label><input type="checkbox"> Internal itching</label><br>
+            <label><input type="checkbox"> Small dents in nails</label><br>
+            <label><input type="checkbox"> Inflammatory nails</label><br>
+            <label><input type="checkbox"> Silver like dusting</label><br>
+            <label><input type="checkbox"> Scurring</label><br>
+            <label><input type="checkbox"> Red sore around nose</label><br>
+            <label><input type="checkbox"> Yellow crust ooze</label><br>
+        </div>
+        
+        <!-- 3I. Sexual/STD Cluster -->
+        <div id="sexualCluster" style="display: none; margin-top: 20px; border-left: 3px solid #e83e8c; padding-left: 10px;">
+            <h3>Sexual Health Assessment:</h3>
+            <label><input type="checkbox"> Extra marital contacts</label><br>
+            <label><input type="checkbox"> Dischromic patches </label><br>
+            <!-- <label><input type="checkbox"> Ulcers (genital)</label><br> -->
+        </div>
+        
+        <!-- STEP 4: Critical and History Indicators -->
+        
+        <!-- 4A. Critical Indicators -->
+        <div id="criticalIndicatorsSection" style="display: none; margin-top: 20px;  border-left: 3px solid #dc3545; padding-left: 10px;">
+            <h3>Critical Health Indicators:</h3>
+            <label><input type="checkbox"><div class="tooltip"> Family history <span class="tooltiptext">(genetic/hereditary conditions)</span>
+
+            </div></label><br>
+            <!-- <label><input type="checkbox"> Acute liver failure</label><br> -->
+            <label><input type="checkbox"> Stomach bleeding</label><br>
+            <!-- <label><input type="checkbox"> Coma</label><br> -->
+            <label><input type="checkbox"> Depression</label><br>
+            <label><input type="checkbox"> Anxiety</label><br>
+            <label><input type="checkbox"> Sunken eyes</label><br>
+        </div>
+        
+        <!-- 4B. Habit/History Related -->
+        <div id="historyRelatedSection" style="display: none; margin-top: 20px; border-left: 3px solid #6c757d; padding-left: 10px;">
+            <h3>Relevant History:</h3>
+            <label><input type="checkbox"> History of alcohol consumption</label><br>
+            <label><input type="checkbox"> Receiving unsterile injections</label><br>
+            <label><input type="checkbox"> Receiving blood transfusion</label><br>
+            <label><input type="checkbox"> Irregular sugar level</label><br>
+        </div>
+        
+        <!-- 4C. Very Specific Symptoms -->
+        <h2>Specific Symptoms:</h2>
+        <label><input type="checkbox"> Irritability</label>
+        <label><input type="checkbox"> Inflammatory nails</label>
+        <label><input type="checkbox"> Blister</label>
+        <label><input type="checkbox"> Abnormal menstruation</label>
+    <br>
+        <br>
+        <input type="submit" value="Submit Symptoms">        
+    </form>
+</body>
+</html>

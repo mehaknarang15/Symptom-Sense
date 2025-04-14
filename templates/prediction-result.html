@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SymptomSense</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(#fefeff, #afd4db);
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      max-width: 100%;
+      padding: 2rem 1rem;
+    }
+
+    .box {
+      max-width: 1024px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background: #2563eb;
+      padding: 1.5rem;
+    }
+
+    .top-bar h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .content h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .content p {
+      font-size: 1rem;
+      color: #4b5563;
+    }
+
+    .content p.blue {
+      color: #2563eb;
+      font-weight: 500;
+    }
+
+    .footer {
+      padding: 1.5rem;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .bold { font-weight: 700; }
+    .semibold { font-weight: 600; }
+    .medium { font-weight: 500; }
+    .gray-800 { color: #1f2937; }
+    .gray-600 { color: #4b5563; }
+    .gray-900 { color: #111827; }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch("static/nav.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("nav-placeholder").innerHTML = html;
+      })
+      .catch(err => console.error("Navigation load error:", err));
+  </script>
+
+  <div class="wrapper">
+    <div class="box">
+      <div class="top-bar">
+        <h1>Disease Prediction Results</h1>
+      </div>
+
+      <div class="content" id="single">
+        <div class="mb-6">
+          <h2>Potential Disease</h2>
+          <p id="name" class="blue text-lg"></p>
+        </div>
+        <div class="mb-6">
+          <h2>Description</h2>
+          <p id="desc"></p>
+        </div>
+        <div class="mb-6">
+          <h2>Precautions</h2>
+          <p id="precautions"></p>
+        </div>
+      </div>
+
+      <div class="content hide" id="multiple">
+        <div class="mb-8">
+          <h2 class="text-2xl bold gray-900 mb-4">First Prediction</h2>
+          <h3 class="text-xl semibold gray-800 mb-2">Potential Disease</h3>
+          <p class="medium blue mb-2" id="name1"></p>
+          <h3 class="text-xl semibold gray-800 mb-2">Description</h3>
+          <p class="gray-600 mb-2" id="desc1"></p>
+          <h3 class="text-xl semibold gray-800 mb-2">Precautions</h3>
+          <p class="gray-600" id="precautions1"></p>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-2xl bold gray-900 mb-4">Second Prediction</h2>
+          <h3 class="text-xl semibold gray-800 mb-2">Potential Disease</h3>
+          <p class="medium blue mb-2" id="name2"></p>
+          <h3 class="text-xl semibold gray-800 mb-2">Description</h3>
+          <p class="gray-600 mb-2" id="desc2"></p>
+          <h3 class="text-xl semibold gray-800 mb-2">Precautions</h3>
+          <p class="gray-600" id="precautions2"></p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <a href="/formdemo" class="btn">Back to Form</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const data = JSON.parse(decodeURIComponent(params.get('data')));
+
+    if (data.disease1 && data.disease2) {
+      document.getElementById('single').classList.add('hide');
+      document.getElementById('multiple').classList.remove('hide');
+
+      document.getElementById('name1').textContent = data.disease1;
+      document.getElementById('desc1').textContent = data.description1;
+      document.getElementById('precautions1').textContent = data.precautions1;
+
+      document.getElementById('name2').textContent = data.disease2;
+      document.getElementById('desc2').textContent = data.description2;
+      document.getElementById('precautions2').textContent = data.precautions2;
+    } else {
+      document.getElementById('single').classList.remove('hide');
+      document.getElementById('multiple').classList.add('hide');
+
+      document.getElementById('name').textContent = data.disease;
+      document.getElementById('desc').textContent = data.description;
+      document.getElementById('precautions').textContent = data.precautions;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:  'Poppins', 'Inter', sans-serif;
+        }
+
+        .navbar {
+            background-color:#4BA3DA;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar .logo {
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: black;
+        }
+
+        .navbar .logo img {
+            width: 35px;
+            height:auto;
+            margin-right: 12px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .navbar .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .buttons button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+
+<nav class="navbar">
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/2544/2544036.png" alt="logo">
+        SYMPTOMSENSE
+    </div>
+        <ul>
+            <li><a href="/">HOME</a></li>
+            <li><a href="#">COMMUNITY</a></li>
+            <li><a href="chatbot">MIND MATE</a></li>
+        </ul>
+                
+        <div class="buttons">
+            <button>Sign-in</button>
+            <button class="cta-button" onclick="window.location.href='/login'">Login</button>
+                    
+        </div>
+    </nav>

@@ -1,0 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+#main{
+    background: url('../images/bg2.jpg') ;
+}
+.main {
+    height: calc(100vh - 60px); /* Assuming nav is about 60px */
+    display: flex;
+    flex-direction: column;
+    padding: 10px 40px 20px; /* Increased side spacing and bottom padding */
+}
+
+.main-text {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.main-text h1 {
+    font-size: 28px; /* Increased font size */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0px;
+}
+
+.main-text p {
+    font-size: 15px; /* Increased font size */
+    color: #666;
+    margin-bottom: 0;
+}
+
+.map {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 165px); /* Reduced height */
+    margin-bottom: 20px; /* Increased bottom margin */
+}
+
+#frame {
+    flex-grow: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin: 0;
+    min-height: 100px;
+    max-height: calc(100vh - 270px); /* Reduced max-height */
+}
+
+
+
+.map-info {
+    background-color: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 10px; /* Space between map and legend */
+}
+
+.map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Increased gap between legend items */
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px; /* Increased font size */
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.main-text .cta-button {
+    background: #0066cc !important;
+    color: white;
+    font-size: 15px;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+}
+
+.main-text .cta-button:hover {
+    background: #004d99 !important;
+}
+
+@media (max-height: 600px) {
+    
+    .map-info {
+        padding: 5px; /* Add some padding even on small screens */
+    }
+    
+    .main-text p {
+        font-size: 13px;
+    }
+    
+    .map-info {
+        padding: 0px;
+    }
+    
+    .legend-item {
+        font-size: 15px;
+    }
+    
+    #frame {
+        max-height: calc(100vh - 220px);
+    }
+}

@@ -1,0 +1,226 @@
+
+:root {
+    --primary: #1565c0;
+    --primary-light: #e3f2fd;
+    --secondary: #0288d1;
+    --accent: #00b0ff;
+    --success: #00897b;
+    --warning: #ffa000;
+    --danger: #e53935;
+    --gray-dark: #37474f;
+    --gray: #607d8b;
+    --gray-light: #eceff1;
+    --body-bg: #f5f9fc;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 15px;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--body-bg);
+    /* background-image: url(/static/images/bg2.jpg)!important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-size: cover !important; */
+    background: linear-gradient(#e3e3fa,#afd4db) !important;
+    color: var(--gray-dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Form container styling */
+  form {
+    max-width: 800px;
+    margin: 2rem auto !important;
+    background-color: var(--card-bg) !important;
+    padding: 2rem !important;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+  
+  /* Header styling */
+  form h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  form h4 {
+    text-align: center;
+    color: var(--gray);
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+  
+  /* Section headers */
+  h2 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--gray-light);
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  h2:hover {
+    color: var(--accent);
+    transform: translateX(5px);
+  }
+  
+  /* Subsection headers */
+  h3 {
+    font-size: 1.2rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  h3:hover::after {
+    width: 30%;
+  }
+  
+  /* Input styling */
+  input[type="checkbox"], input[type="radio"] {
+    accent-color: var(--primary);
+    margin-right: 8px;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  
+  label {
+    display: inline-block;
+    margin: 0.4rem 1.5rem 0.4rem 0;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem 0;
+    transition: transform 0.2s ease;
+  }
+  
+  label:hover {
+    transform: translateX(3px);
+  }
+  
+  /* Submit button */
+  input[type="submit"] {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Subsection containers - with different blue shades */
+  div[id$="Questions"], 
+  div[id$="Cluster"], 
+  div[id$="Section"] {
+    background-color: var(--primary-light);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem !important;
+    margin: 1rem 0 1.5rem 0 !important;
+    border-left: 4px solid var(--primary) !important;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Color variations for different sections */
+  div[id*="fever"] { border-left-color: #1e88e5 !important; }
+  div[id*="headache"] { border-left-color: #039be5 !important; }
+  div[id*="joint"] { border-left-color: #00acc1 !important; }
+  div[id*="stomach"] { border-left-color: #00897b !important; }
+  div[id*="chest"] { border-left-color: #0288d1 !important; }
+  div[id*="back"] { border-left-color: #0097a7 !important; }
+  div[id*="rash"] { border-left-color: #00796b !important; }
+  div[id*="skin"] { border-left-color: #0277bd !important; }
+  div[id*="GI"] { border-left-color: #01579b !important; }
+  div[id*="cough"] { border-left-color: #006064 !important; }
+  div[id*="nasal"] { border-left-color: #004d40 !important; }
+  div[id*="throat"] { border-left-color: #01579b !important; }
+  
+  div[id$="Questions"]:hover, 
+  div[id$="Cluster"]:hover, 
+  div[id$="Section"]:hover {
+    transform: translateX(5px);
+  }
+  
+  /* Tooltips */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted var(--gray);
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--gray-dark);
+    color: white;
+    text-align: center;
+    border-radius: var(--border-radius);
+    padding: 8px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    form {
+      margin: 1rem !important;
+      padding: 1.5rem !important;
+    }
+    
+    label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    
+    .tooltip .tooltiptext {
+      width: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 100%;
+      margin-top: 5px;
+    }
+  }

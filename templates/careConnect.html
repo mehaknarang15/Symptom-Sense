@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles/CCStyle.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+    
+    <script>
+        fetch("static/nav.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("nav-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading the navigation:", error));
+    </script>
+<div class="main">
+    <div class="main-text">
+        <h1>CARE CONNECT</h1>
+        <p>Find healthcare facilities near you. Click on a facility to see details and double tap to get directions.</p>
+    </div>
+    <div class="map">
+        <pre id="frame"></pre>
+        <div class="map-info">
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: red;"></div>
+                    <span>Hospitals</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: blue;"></div>
+                    <span>Clinics</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: green;"></div>
+                    <span>Pharmacies</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #4285F4;"></div>
+                    <span>Your Location</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='scripts/google-maps-integration.js') }}"></script>
+</body>
+</html>

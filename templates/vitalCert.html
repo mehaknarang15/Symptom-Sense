@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block title %}SymptomSense{% endblock %}
+{% block extra_styles %}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vitalStyle.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- start home section -->
+<section class="home" id="home">
+    <div class="home-text">
+        <h6>Welcome to SymptomSense Educational Health Platform</h6>
+        <h1>Explore courses, get certified and enhance your healthcare knowledge</h1>
+        <p>Own your future learning new skills online</p>
+        <div class="latter">
+            <form>
+                <input type="search" placeholder="Explore Courses" required>
+                <input type="submit" value="Let's Start" required>
+            </form>
+        </div>
+    </div>
+    
+    <div class="home-img">
+        <img src="{{ url_for('static', filename='images/doctor.png') }}">
+    </div>
+</section>
+<section class="categories" id="categories">
+    <div class="center-text">
+        <h5>CATEGORIES</h5>
+        <h2>Popular Categories</h2>
+    </div>
+    <div class="categories-content">
+        <div class="box">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}">
+            <h3>Medical & Clinical Courses</h3>
+            <p>15 Courses</p>
+        </div>
+        <div class="box">
+            <img src="{{ url_for('static', filename='images/logo2.png') }}">
+            <h3>Nursing & Patient Care</h3>
+            <p>20 Courses</p>
+        </div>
+        <div class="box">
+            <img src="{{ url_for('static', filename='images/logo4.png') }}">
+            <h3>Healthcare Technology & Informatics</h3>
+            <p>17 Courses</p>
+        </div>
+        <div class="box">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}">
+            <h3>Public Health & Wellness</h3>
+            <p>5 Courses</p>
+        </div>
+    </div>
+
+    <div class="main-btn">
+        <a href="#" class="btn">All Categories</a>
+    </div>
+    
+</section>
+
+<!-- start course section -->
+<section class="courses" id="courses">
+    <div class="center-text">
+        <h5>COURSES</h5>
+        <h2>Explore Popular Courses</h2>
+    </div>
+
+    <div class="courses-content">
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/course1.jpg') }}">
+            <div class="courses-text">
+                <h5>$35.00</h5>
+                <h3>Diploma in Healthcare Management & Leadership</h3>
+                <h6>05 hours 15 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/female.png') }}">
+            <div class="courses-text">
+                <h5>$20.00</h5>
+                <h3>Female Hormone & how they affect Metabolism</h3>
+                <h6>09 hours 20 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/covid.jpg') }}">
+            <div class="courses-text">
+                <h5>$21.00</h5>
+                <h3>COVID-19: Diagnosis & Antibody Therepies</h3>
+                <h6>04 hours 10 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/course3.jpg') }}">
+            <div class="courses-text">
+                <h5>$20.00</h5>
+                <h3>Fundamentals of Healthcare Communication</h3>
+                <h6>03 hours 15 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/ai.jpg') }}">
+            <div class="courses-text">
+                <h5>$10.00</h5>
+                <h3>AI in Healthcare</h3>
+                <h6>08 hours 15 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/analytics.jpg') }}">
+            <div class="courses-text">
+                <h5>$30.00</h5>
+                <h3>Healthcare Analytics Essentials</h3>
+                <h6>05 hours 15 minutes</h6>
+                <div class="rating">
+                    <div class="star">
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                        <a href="#"><i class='bx bxs-star'></i></a>
+                    </div>
+                    <div class="review">
+                        <p>{5 Reviews}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main-btn">
+        <a href="#" class="btn">Buy Now</a>
+    </div>
+</section>
+<section class="certification-section">
+    <div class="certification-container">
+        <div class="certificate-image">
+            <img src="{{ url_for('static', filename='images/Certificate.png') }}" alt="Certificate">
+        </div>
+        <div class="certification-text">
+            <h2>Get Certified</h2>
+            <p>Earn industry-recognized certificates upon course completion.</p>
+        </div>
+    </div>
+</section>  <!-- Closing this section properly -->
+
+<section class="about" id="about">
+    <div class="about-img">
+        <img src="{{ url_for('static', filename='images/teacher.png') }}">
+    </div>
+
+    <div class="about-text">
+        <h2>Want to share knowledge? Join us as Mentor</h2>
+        <p>Join SymptomSense as a mentor and empower the next generation of learners in health and education!</p>
+        <h4>Best Courses</h4>
+        <h5>Top rated Instructors</h5>
+        <a href="#" class="btn">Read More</a>
+    </div>
+</section>
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='scripts/vitalScript.js') }}"></script>
+{% endblock %}
+{% endblock %}
