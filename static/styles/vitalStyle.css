@@ -66,11 +66,12 @@ section {
 }
 
 .home-img img {
-    max-width: 100%;
     height: auto;
+    width: auto;
+    max-height: 100%;
     object-fit: contain;
+    object-position: center;
 }
-
 /* Latter Form */
 .latter form {
     width: 100%;
@@ -327,11 +328,13 @@ section {
     align-items: center;
 }
 
+
 .about-img img {
-    max-width: 100%;
     height: auto;
-    max-width: 700px; 
-    object-fit: cover;
+    width: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
 
 .about-text h2 {

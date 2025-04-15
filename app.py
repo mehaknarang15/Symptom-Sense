@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-import google.generativeai as genai  # Add this import
+import google.generativeai as genai 
 import os
 import sys
 import re
@@ -119,4 +119,3 @@ def maps_script():
 
     script_url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap"
     return jsonify({"scriptUrl": script_url})
-

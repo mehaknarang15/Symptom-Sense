@@ -90,9 +90,11 @@ section{
     right: 1px;
 }
 .home-img img {
-    position: relative;
-    width: auto;
-    height: 560px;
+    height: auto;
+    max-height: 100%;
+    margin-left: 100px;
+    object-fit: contain;
+    object-position: center;
 }
 
 .main-btn{

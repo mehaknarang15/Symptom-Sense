@@ -8,19 +8,19 @@
     * {
       box-sizing: border-box;
     }
-
+    
     body {
       margin: 0;
       font-family: sans-serif;
       background: linear-gradient(#fefeff, #afd4db);
       min-height: 100vh;
     }
-
+    
     .wrapper {
       max-width: 100%;
       padding: 2rem 1rem;
     }
-
+    
     .box {
       max-width: 1024px;
       margin: 0 auto;
@@ -29,45 +29,46 @@
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
-
+    
     .top-bar {
       background: #2563eb;
       padding: 1.5rem;
     }
-
+    
     .top-bar h1 {
       font-size: 1.5rem;
       font-weight: bold;
       color: white;
     }
-
+    
     .content {
       padding: 1.5rem;
     }
-
+    
     .content h2 {
       font-size: 1.25rem;
       font-weight: 600;
       color: #1f2937;
       margin-bottom: 0.5rem;
     }
-
+    
     .content p {
       font-size: 1rem;
       color: #4b5563;
+      line-height: 1.8; /* Added line spacing */
     }
 
     .content p.blue {
       color: #2563eb;
       font-weight: 500;
     }
-
+    
     .footer {
       padding: 1.5rem;
       background: #f9fafb;
       border-top: 1px solid #e5e7eb;
     }
-
+    
     .btn {
       background: #2563eb;
       color: white;
@@ -77,18 +78,18 @@
       display: inline-block;
       transition: background 0.2s ease;
     }
-
+    
     .btn:hover {
       background: #1d4ed8;
     }
-
+    
     .hide {
       display: none;
     }
-
+    
     .mb-4 { margin-bottom: 1rem; }
-    .mb-6 { margin-bottom: 1.5rem; }
-    .mb-8 { margin-bottom: 2rem; }
+    .mb-6 { margin-bottom: 1.5rem; line-height: 1.8;}
+    .mb-8 { margin-bottom: 2rem; line-height: 1.8;}
     .text-xl { font-size: 1.25rem; }
     .text-2xl { font-size: 1.5rem; }
     .bold { font-weight: 700; }
@@ -97,7 +98,7 @@
     .gray-800 { color: #1f2937; }
     .gray-600 { color: #4b5563; }
     .gray-900 { color: #111827; }
-  </style>
+</style>
 </head>
 <body>
   <div id="nav-placeholder"></div>
