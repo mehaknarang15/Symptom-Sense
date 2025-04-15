@@ -1,19 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const mapsScript = document.createElement('script');
-  fetch('/get-maps-api-key')
-  .then(response => response.json())
-  .then(data => {
-    if (data.apiKey) {
-      const mapsScript = document.createElement('script');
-      mapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=places&callback=initMap`;
-      mapsScript.async = true;
-      mapsScript.defer = true;
-      document.head.appendChild(mapsScript);
-    } else {
-      console.error("Failed to fetch Google Maps API key");
-    }
-  })
-  .catch(error => console.error("Error fetching API key:", error));
+  fetch('/maps-script')
+    .then(response => response.json())
+    .then(data => {
+      if (data.scriptUrl) {
+        const mapsScript = document.createElement('script');
+        mapsScript.src = data.scriptUrl;
+        mapsScript.async = true;
+        mapsScript.defer = true;
+        document.head.appendChild(mapsScript);
+      } else {
+        console.error("Failed to load Google Maps script");
+      }
+    })
+    .catch(error => console.error("Error loading Maps script URL:", error));
   mapsScript.async = true;
   mapsScript.defer = true;
   document.head.appendChild(mapsScript);

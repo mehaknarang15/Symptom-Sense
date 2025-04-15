@@ -8,22 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module">
         import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-        import { GoogleGenerativeAI } from "https://cdn.jsdelivr.net/npm/@google/generative-ai/+esm";
-
+    
         const chatContainer = document.getElementById("chat-section");
         const promptInput = document.getElementById("prompt");
         const generateBtn = document.getElementById("submit-button");
         const imageUploader = document.getElementById("imageUploader");
         const fileLabel = document.getElementById("file-label");
-
-        // Stream is always checked by default and hidden
-        const streamCheck = { checked: true };
-
-        let API_KEY = "";
-        let genAI;
-        let model;
-        let chat;
-
+    
         // Show filename when file is selected
         imageUploader.addEventListener('change', function() {
             if (this.files.length > 0) {
@@ -34,102 +25,39 @@
                 fileLabel.classList.remove('file-selected');
             }
         });
-
-        // Fetch API key from server when page loads
+    
         async function initializeChat() {
             try {
-                const response = await fetch('/get-api-key');
-                const data = await response.json();
-                
-                API_KEY = data.apiKey;
-                genAI = new GoogleGenerativeAI(API_KEY);
-                model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-                chat = model.startChat({
-                    history: [
-                        {
-                            role: "user",
-                            parts: [{ text: "Hello, You will answer to my prompts." }],
-                        },
-                        {
-                            role: "model",
-                            parts: [{ text: "Great to meet you. What would you like to know?" }],
-                        },
-                    ],
-                    generationConfig: {
-                        maxOutputTokens: 1000,
-                    },
-                });
-                
-                // Enable UI elements once API key is loaded
                 promptInput.disabled = false;
                 generateBtn.disabled = false;
-                
-                // Add welcome message
                 addMessage("Hi there! I'm SymptomSense Mind Mate. How can I help you today?", "response-message");
-                
             } catch (error) {
                 console.error("Failed to initialize chat:", error);
                 addMessage("Failed to initialize the chatbot. Please try again later.", "response-message");
             }
         }
-
-        // Initialize chat on page load
-        window.addEventListener('DOMContentLoaded', initializeChat);
-
-        const toBase64 = (file) => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result.split(",")[1]); // Get only the Base64 part
-                reader.onerror = (error) => reject(error);
+    
+        async function sendPrompt(promptParts) {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: promptParts })
             });
-        };
-
-        const generateResult = async (prompt) => {
-            try {
-                if (!API_KEY) {
-                    addMessage("Chat is still initializing. Please wait a moment.", "response-message");
-                    return;
-                }
-                
-                // Show thinking indicator
-                const thinkingDiv = document.createElement("div");
-                thinkingDiv.className = "response-message thinking";
-                thinkingDiv.innerHTML = '<div class="thinking-dots"><span></span><span></span><span></span></div>';
-                chatContainer.appendChild(thinkingDiv);
-                
-                // Stream is always enabled
-                const result = await chat.sendMessageStream(prompt);
-
-                // Remove thinking indicator
-                chatContainer.removeChild(thinkingDiv);
-                
-                let text = "";
-                let element = null;
-
-                for await (const chunk of result.stream) {
-                    text += chunk.text();
-                    // Add the message to the same element
-                    element = addMessage(text, "response-message", element);
-                }
-
-            } catch (error) {
-                addMessage("An error occurred: " + error.message, "response-message");
-            }
-        };
-
-        function addMessage(text, className, messageDiv=null) {
-            if(messageDiv === null) {
+            const data = await response.json();
+            return data.response || "No response from server.";
+        }
+    
+        function addMessage(text, className, messageDiv = null) {
+            if (messageDiv === null) {
                 messageDiv = document.createElement("div");
                 chatContainer.appendChild(messageDiv);
             }
             messageDiv.className = className;
             messageDiv.innerHTML = marked.parse(text);
-            
-            // If it's a response message, add copy button for code blocks
+    
             if (className === "response-message") {
                 const codeBlocks = messageDiv.querySelectorAll('pre code');
-                codeBlocks.forEach((block, index) => {
+                codeBlocks.forEach((block) => {
                     const copyBtn = document.createElement('button');
                     copyBtn.className = 'copy-button';
                     copyBtn.textContent = 'Copy code';
@@ -143,55 +71,68 @@
                     block.parentNode.insertBefore(copyBtn, block);
                 });
             }
-            
-            // Scroll to the bottom of the chat container
+    
             chatContainer.scrollTop = chatContainer.scrollHeight;
-            
-            // Return the same container
             return messageDiv;
         }
-
+    
+        async function generateResult(promptParts) {
+            const thinkingDiv = document.createElement("div");
+            thinkingDiv.className = "response-message thinking";
+            thinkingDiv.innerHTML = '<div class="thinking-dots"><span></span><span></span><span></span></div>';
+            chatContainer.appendChild(thinkingDiv);
+    
+            const responseText = await sendPrompt(promptParts);
+    
+            chatContainer.removeChild(thinkingDiv);
+            addMessage(responseText, "response-message");
+        }
+    
         generateBtn.addEventListener("click", async () => {
             const userPrompt = promptInput.value.trim();
             if (!userPrompt) return;
-
+    
             const prompt = [{ text: userPrompt }];
-
             addMessage(userPrompt, "user-message");
             promptInput.value = "";
-
+    
             if (imageUploader.files.length > 0) {
-                const imageData = await toBase64(imageUploader.files[0]);
-                prompt.push({
-                    inline_data: {
-                        data: imageData,
-                        mime_type: imageUploader.files[0].type,
-                    },
-                });
-                
-                // Reset file input and label
-                imageUploader.value = '';
-                fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> Attach';
-                fileLabel.classList.remove('file-selected');
+                const reader = new FileReader();
+                reader.onload = async () => {
+                    const base64 = reader.result.split(",")[1];
+                    prompt.push({
+                        inline_data: {
+                            data: base64,
+                            mime_type: imageUploader.files[0].type,
+                        }
+                    });
+                    imageUploader.value = '';
+                    fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> Attach';
+                    fileLabel.classList.remove('file-selected');
+                    generateResult(prompt);
+                };
+                reader.readAsDataURL(imageUploader.files[0]);
+            } else {
+                generateResult(prompt);
             }
-            
-            generateResult(prompt);
         });
-
+    
         promptInput.addEventListener("keydown", (event) => {
-            if(event.key === "Enter" && !event.shiftKey) {
+            if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 generateBtn.click();
             }
         });
-        
-        // Add autoexpand to input
-        promptInput.addEventListener('input', function() {
+    
+        promptInput.addEventListener('input', function () {
             this.style.height = 'auto';
-            const maxHeight = 150; // Maximum height before scrolling
+            const maxHeight = 150;
             this.style.height = (this.scrollHeight < maxHeight ? this.scrollHeight : maxHeight) + 'px';
         });
+    
+        window.addEventListener('DOMContentLoaded', initializeChat);
     </script>
+    
 </head>
 <body>
   <!-- <div id="nav-placeholder"></div>

@@ -5,3 +5,4 @@ werkzeug
 scikit-learn
 gunicorn
 python-dotenv
+google-generativeai

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
+import google.generativeai as genai  # Add this import
 import os
 import sys
 import re
@@ -88,4 +89,34 @@ def vitalCert():
 @app.route('/prediction-result')
 def prediction_result():
     return render_template('prediction-result.html')
+
+# Configure Gemini
+genai.configure(api_key=GEMINI_API_KEY)
+
+@app.route('/chat', methods=['POST'])
+def chat_with_gemini():
+    try:
+        data = request.get_json()
+        user_prompt = data.get("prompt", "")
+        if not user_prompt:
+            return jsonify({"error": "No prompt provided"}), 400
+
+        model = genai.GenerativeModel("gemini-1.5-pro")
+        chat = model.start_chat(history=[
+            {"role": "user", "parts": [{"text": "Hello, You will answer to my prompts."}]},
+            {"role": "model", "parts": [{"text": "Great to meet you. What would you like to know?"}]}
+        ])
+        response = chat.send_message(user_prompt)
+        return jsonify({"response": response.text})
+    except Exception as e:
+        app.logger.error(f"Gemini chat error: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+@app.route('/maps-script')
+def maps_script():
+    if not GOOGLE_MAPS_API_KEY:
+        return jsonify({"error": "API key not found"}), 500
+
+    script_url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap"
+    return jsonify({"scriptUrl": script_url})
 
