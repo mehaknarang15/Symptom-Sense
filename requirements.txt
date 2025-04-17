@@ -6,3 +6,4 @@ scikit-learn
 gunicorn
 python-dotenv
 google-generativeai
+requests==2.31.0

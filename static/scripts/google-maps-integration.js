@@ -13,9 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     })
     .catch(error => console.error("Error loading Maps script URL:", error));
-  mapsScript.async = true;
-  mapsScript.defer = true;
-  document.head.appendChild(mapsScript);
 });
 
 // Initialize the map and related functionality

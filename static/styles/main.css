@@ -90,9 +90,8 @@ section{
     right: 1px;
 }
 .home-img img {
-    height: auto;
+    height: 560px;
     max-height: 100%;
-    margin-left: 100px;
     object-fit: contain;
     object-position: center;
 }

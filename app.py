@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,url_for,Response
+import requests
 from dotenv import load_dotenv
 import google.generativeai as genai 
 import os
@@ -116,6 +117,27 @@ def chat_with_gemini():
 def maps_script():
     if not GOOGLE_MAPS_API_KEY:
         return jsonify({"error": "API key not found"}), 500
+    
+    # Instead of returning the API key, create a proxy route for the Google Maps API
+    proxy_url = url_for('google_maps_proxy', _external=True)
+    return jsonify({"scriptUrl": proxy_url})
 
-    script_url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap"
-    return jsonify({"scriptUrl": script_url})
+@app.route('/google-maps-proxy')
+def google_maps_proxy():
+    # This endpoint will proxy the request to Google Maps API
+    libraries = request.args.get('libraries', 'places')
+    callback = request.args.get('callback', 'initMap')
+    
+    # Fetch the Google Maps script with your server-side API key
+    google_maps_url = f"https://maps.googleapis.com/maps/api/js?key={GOOGLE_MAPS_API_KEY}&libraries={libraries}&callback={callback}"
+    
+    try:
+        response = requests.get(google_maps_url)
+        return Response(
+            response.content,
+            status=response.status_code,
+            content_type='application/javascript'
+        )
+    except Exception as e:
+        app.logger.error(f"Error proxying Google Maps API: {str(e)}")
+        return "console.error('Failed to load Google Maps');", 500, {'Content-Type': 'application/javascript'}
