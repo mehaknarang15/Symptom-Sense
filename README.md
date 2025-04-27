@@ -3,7 +3,7 @@
 > *Empowering better health, one symptom at a time.* 
 ---
 
-## 🩺 Problem Statement
+## 🩺 Challenges in Modern Healthcare
 
 Today's healthcare system faces several critical challenges:
 -  Delayed diagnosis due to limited access
