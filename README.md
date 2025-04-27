@@ -81,4 +81,5 @@ We welcome contributions! Whether it's code, documentation, or ideas — open a 
 
 
 > *Empowering better health, one symptom at a time.* 🫀
+
 **Built by**: Mehak, Komal, Priya 
