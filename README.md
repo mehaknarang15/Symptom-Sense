@@ -1,5 +1,6 @@
-# 🧠 SymptomSense: AI-Powered Health & Education Platform
- 
+# SymptomSense: AI-Powered Health & Education Platform
+
+> *Empowering better health, one symptom at a time.* 
 ---
 
 ## 🩺 Problem Statement
@@ -44,9 +45,9 @@ SymptomSense is a comprehensive AI-powered health and education platform that ai
 |-------|-------|
 | **Frontend** | HTML, CSS, JavaScript |
 | **Backend** | Flask |
-| **AI/ML** | Scikit-learn |
+| **AI/ML** | Python ( Scikit-learn ) |
 | **Database** | SQL |
-| **APIs** | Google Maps API |
+| **APIs** | Google Maps API , Gemini API |
 
 ---
 
@@ -79,7 +80,4 @@ We welcome contributions! Whether it's code, documentation, or ideas — open a 
 
 ---
 
-
-> *Empowering better health, one symptom at a time.* 🫀
-
-**Built by**: Mehak, Komal, Priya 
+**Developed by**: Mehak, Komal, Priya 
