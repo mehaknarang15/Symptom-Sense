@@ -102,7 +102,7 @@ def chat_with_gemini():
         if not user_prompt:
             return jsonify({"error": "No prompt provided"}), 400
 
-        model = genai.GenerativeModel("gemini-1.5-pro")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         chat = model.start_chat(history=[
             {"role": "user", "parts": [{"text": "Hello, You will answer to my prompts."}]},
             {"role": "model", "parts": [{"text": "Great to meet you. What would you like to know?"}]}
