@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #e6f3ff !important;
+            color: #333 !important;
+        }
+        
+        .container {
+            margin: 40px auto !important;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            max-width: 85%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        h1 {
+            color: #0b5394;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #444;
+            flex-shrink: 0;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid #d0e3ff;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4a89dc;
+            box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.25);
+        }
+        
+        button {
+            padding: 14px 28px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background-color: #227346;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+            font-weight: bold;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .results {
+            margin-top: 30px;
+        }
+        
+        .medicine-card {
+            border: 1px solid #e1e5eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+        
+        .medicine-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0b5394;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #e6f3ff;
+            padding-bottom: 12px;
+        }
+        
+        .medicine-details {
+            margin-left: 12px;
+        }
+        
+        /* Add these styles to your CSS */
+        .medicine-details p {
+            display: flex;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .property-label {
+            font-weight: 600;
+            color: #2e8b57;
+            flex: 0 0 110px; /* Fixed width for all labels */
+            text-align: left;
+        }
+
+        .property-value {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .error-message {
+            color: #e53935;
+            font-weight: bold;
+            text-align: center;
+            padding: 16px;
+            background-color: #ffebee;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="container">
+        <h1>MediTrack</h1>
+        <p>Search for medicines to find their uses, side effects, and substitutes.</p>
+        
+        <div class="search-container">
+            <label for="med">Enter medicine name:</label>
+            <input type="text" id="med" placeholder="e.g., paracetamol, aspirin">
+            <button id="search-btn">Search</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    .spinner {
+                        animation: rotate 2s linear infinite;
+                        transform-origin: center;
+                    }
+                    .path {
+                        stroke: #2e8b57;
+                        stroke-width: 4;
+                        stroke-linecap: round;
+                        animation: dash 1.5s ease-in-out infinite;
+                    }
+                    @keyframes rotate {
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                    @keyframes dash {
+                        0% {
+                            stroke-dasharray: 1, 150;
+                            stroke-dashoffset: 0;
+                        }
+                        50% {
+                            stroke-dasharray: 90, 150;
+                            stroke-dashoffset: -35;
+                        }
+                        100% {
+                            stroke-dasharray: 90, 150;
+                            stroke-dashoffset: -124;
+                        }
+                    }
+                </style>
+                <circle class="spinner path" cx="12" cy="12" r="10" fill="none"></circle>
+            </svg>
+            Searching medicines...
+        </div>
+        
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        // Load navigation first
+        fetch("static/nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+                
+                // Call function after the nav is inserted
+                adjustContainerMargin();
+            })
+            .catch(error => console.error("Error loading the navigation:", error));
+
+        // function adjustContainerMargin() {
+        //     // Delay execution to ensure rendering
+        //     setTimeout(() => {
+        //         const navbar = document.querySelector("#nav-placeholder");
+        //         const container = document.querySelector(".container");
+
+        //         if (navbar && container) {
+        //             const navHeight = navbar.offsetHeight;
+        //             console.log("Navbar Height:", navHeight); // Debugging step
+        //             container.style.marginTop = navHeight + "px";
+        //         } else {
+        //             console.error("Navbar or container not found!");
+        //         }
+        //     }, 100); // Small delay to ensure navbar is rendered
+        // }
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('med');
+            const searchBtn = document.getElementById('search-btn');
+            const resultsDiv = document.getElementById('results');
+            const loadingDiv = document.getElementById('loading');
+            
+            // Search when button is clicked
+            searchBtn.addEventListener('click', performSearch);
+            
+            // Or when Enter key is pressed
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const query = searchInput.value.trim();
+                
+                if (!query) {
+                    resultsDiv.innerHTML = '<p class="error-message">Please enter a medicine name to search</p>';
+                    return;
+                }
+                
+                // Show loading indicator
+                loadingDiv.style.display = 'flex';
+                loadingDiv.style.alignItems = 'center';
+                loadingDiv.style.justifyContent = 'center';
+                loadingDiv.style.gap = '10px';
+                resultsDiv.innerHTML = '';
+                
+                // Make API request to the Flask backend using GET with query parameters
+                fetch(`/search?query=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingDiv.style.display = 'none';
+                    
+                    if (data.error) {
+                        resultsDiv.innerHTML = `<p class="error-message">${data.error}</p>`;
+                        return;
+                    }
+                    
+                    displayResults(data);
+                })
+                .catch(error => {
+                    loadingDiv.style.display = 'none';
+                    resultsDiv.innerHTML = `<p class="error-message">Error: ${error.message}</p>`;
+                });
+            }
+
+            function displayResults(data) {
+                resultsDiv.innerHTML = '';
+                
+                if (data.Error) {
+                    resultsDiv.innerHTML = `<p class="error-message">${data.Error}</p>`;
+                    return;
+                }
+                
+                // Display each medicine
+                for (const [medicineName, details] of Object.entries(data)) {
+                    const medicineCard = document.createElement('div');
+                    medicineCard.className = 'medicine-card';
+                    
+                    const nameElement = document.createElement('div');
+                    nameElement.className = 'medicine-name';
+                    nameElement.textContent = medicineName;
+                    medicineCard.appendChild(nameElement);
+                    
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'medicine-details';
+                    
+                    // Define the display order (uses, side effects, substitutes, then everything else)
+                    const displayOrder = ['uses', 'side effects', 'substitutes'];
+                    
+                    // First add the properties in our preferred order
+                    displayOrder.forEach(propertyName => {
+                        for (const [property, value] of Object.entries(details)) {
+                            if (property.toLowerCase() === propertyName) {
+                                const propertyDiv = document.createElement('p');
+                                
+                                const propertyLabel = document.createElement('span');
+                                propertyLabel.className = 'property-label';
+                                propertyLabel.textContent = `${property}:`;
+                                propertyDiv.appendChild(propertyLabel);
+                                
+                                const propertyValue = document.createElement('span');
+                                propertyValue.className = 'property-value';
+                                propertyValue.textContent = value;
+                                propertyDiv.appendChild(propertyValue);
+                                
+                                detailsDiv.appendChild(propertyDiv);
+                            }
+                        }
+                    });
+                    
+                    // Then add any remaining properties that weren't in our preferred order
+                    for (const [property, value] of Object.entries(details)) {
+                        if (!displayOrder.includes(property.toLowerCase())) {
+                            const propertyDiv = document.createElement('p');
+                            
+                            const propertyLabel = document.createElement('span');
+                            propertyLabel.className = 'property-label';
+                            propertyLabel.textContent = `${property}:`;
+                            propertyDiv.appendChild(propertyLabel);
+                            
+                            const propertyValue = document.createElement('span');
+                            propertyValue.className = 'property-value';
+                            propertyValue.textContent = value;
+                            propertyDiv.appendChild(propertyValue);
+                            
+                            detailsDiv.appendChild(propertyDiv);
+                        }
+                    }
+                    
+                    medicineCard.appendChild(detailsDiv);
+                    resultsDiv.appendChild(medicineCard);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
