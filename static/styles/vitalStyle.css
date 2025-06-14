@@ -53,18 +53,21 @@ header{
 
 }
 .navbar{
-    /* display: flex;
-    padding: 10px 20px;        
-    display: flex;
-    justify-content: space-between;
+    position: fixed; 
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--main-color);
+    flex-direction: column;
     align-items: center;
-    background-color: #4BA3DA;
-    margin: 0; */
-    display: flex;
-    padding: 10px 20px;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4BA3DA;
+    justify-content: center;
+    padding: 100px 30px;
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+.navbar.open {
+    right: 0;
 }
 .navbar a{
     color: white;
