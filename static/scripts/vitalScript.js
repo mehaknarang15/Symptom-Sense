@@ -1,11 +1,10 @@
 const header = document.querySelector("header");
+const menu = document.querySelector('#menu-icon');
+const navbar = document.querySelector('.navbar');
 
 window.addEventListener("scroll", function(){
     header.classList.toggle("sticky", window.scrollY > 0);
 });
-
-let menu = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
 
 menu.onclick = () => {
     menu.classList.toggle('bx-x');
@@ -13,8 +12,15 @@ menu.onclick = () => {
 };
 
 window.onscroll = () => {
-    if (menu.classList.contains('bx-x')) {
+    menu.classList.remove('bx-x');
+    navbar.classList.remove('open');
+};
+
+// Close navbar when any nav link is clicked
+const navLinks = document.querySelectorAll('.navbar a');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
         menu.classList.remove('bx-x');
         navbar.classList.remove('open');
-    }
-};
+    });
+});
