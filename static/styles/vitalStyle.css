@@ -34,29 +34,37 @@ header{
     padding: 23px 13%;
     transition: all .40s ease;
 }
-.logo img{
-    height: 40 px; /* auto; */
-    width: 160px;
-    max-width: 100%;
-    width: 25px;
-    margin-right: 10px;
-}
 .logo{
     font-size: 22px;
     font-weight: 600;
     display: flex;
     align-items: left;
     color: black;
-    
+}
+.logo img{
+    /* height: 40 px; 
+    width: 160px;
+    max-width: 100%;
+    width: 25px;
+    margin-right: 10px; */
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+
 }
 .navbar{
-    display: flex;
-    padding: 10px 20px;        /* 15px 40px; */
+    /* display: flex;
+    padding: 10px 20px;        
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #4BA3DA;
-    margin: 0;
+    margin: 0; */
+    display: flex;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4BA3DA;
 }
 .navbar a{
     color: white;
@@ -90,11 +98,16 @@ header{
     cursor: pointer;
     display: none;
 }
+header.sticky {
+    background: #4BA3DA;
+    padding: 12px 13%;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
 section{
     padding: 80px 13%;
 }
 .home{
-    position: relative;
+    /* position: relative;
     height: 100vh;
     width: 100%;
     background: url(../images/bg2.jpg);
@@ -103,7 +116,15 @@ section{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
+    gap: 1rem;
+    background: url(../images/bg2.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
 .home-text h1{
     font-size: var(--big-font);
@@ -127,15 +148,15 @@ section{
     position: relative;
 }
 .latter form input:first-child{
-    display: inline-block;
+    /* display: inline-block; */
     width: 100%;
-    outline: none;
+    /* outline: none; */
     padding: 16px 140px 16px 15px;
     border: 2px solid var(--main-color);
     border-radius: 30px;
 }
 .latter form input:last-child{
-    position: absolute;
+    /* position: absolute;
     display: inline-block;
     border: none;
     outline: none;
@@ -145,10 +166,19 @@ section{
     border-radius: 30px;
     cursor: pointer;
     top: 2px;
+    right: 1px; */
+    position: absolute;
+    background: var(--main-color);
+    color: var(--bg-color);
+    padding: 16px 40px;
+    border-radius: 30px;
+    top: 2px;
     right: 1px;
+    border: none;
+    cursor: pointer;
 }
 .home-img img{
-    height: fit-content;
+    /* height: fit-content; */
     width: 90%;
 }
 header.sticky{
@@ -438,18 +468,49 @@ header.sticky{
 /* Mobile responsive styles */
 
 @media (max-width: 1200px){
-    header{
-        padding: 15px 3%;
-    }
-    section{
-        padding: 60px 3%;
-    }
     .certification-section{
         padding: 60px 3%;
     }
 }
-
+@media (max-width: 480px) {
+    header {
+        padding: 10px 5%;
+    }
+    .logo {
+        font-size: 16px;
+    }
+    .logo img {
+        width: 30px;
+        height: 30px;
+    }
+    .home {
+        padding: 80px 5% 40px;
+    }
+    .home-text h1 {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    .home-text h6 {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    .home-text p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .latter form input:first-child {
+        padding: 12px 100px 12px 12px;
+        font-size: 12px;
+    }
+    .latter form input:last-child {
+        padding: 12px 15px;
+        font-size: 11px;
+    }
+}
 @media (max-width: 1024px){
+    section {
+        padding: 60px 3%;
+    }
     :root{
         --big-font: 2.5rem;
         --h2-font: 2.2rem;
@@ -457,7 +518,7 @@ header.sticky{
     }
     .home{
         grid-template-columns: 1fr;
-        gap: 2rem;
+        /* gap: 2rem; */
         text-align: center;
         padding-top: 120px;
     }
@@ -490,7 +551,7 @@ header.sticky{
         display: block;
     }
     .navbar{
-        position: absolute;
+        /* position: absolute;
         top: 100%;
         right: -100%;
         width: 280px;
@@ -500,22 +561,32 @@ header.sticky{
         flex-direction: column;
         align-items: center;
         padding: 100px 30px;
-        transition: all .40s ease;
+        transition: all .40s ease; */
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--main-color);
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        padding: 100px 30px;
+        transition: all 0.4s ease;
     }
     .navbar a{
-        display: block;
         margin: 20px 0;
         color: var(--bg-color);
         font-size: 18px;
     }
-    .navbar a:hover{
+    /* .navbar a:hover{
         color: var(--bg-color);
         transform: translateY(-5px);
-    }
+    } */
     .navbar.open{
         right: 0;
     }
-    logo{
+    .logo{
         font-size: 16px;
     }
     .logo img{
@@ -529,24 +600,6 @@ header.sticky{
         --big-font: 2rem;
         --h2-font: 1.8rem;
         --p-font: 0.9rem;
-    }
-    .home{
-        min-height: auto;
-        padding: 100px 5% 50px;
-    }
-    .home-text h1{
-        font-size: 2rem;
-    }
-    .home-text h6{
-        font-size: 14px;
-    }
-    latter form input:first-child{
-        padding: 14px 120px 14px 15px;
-        font-size: 14px;
-    }
-    .latter form input:last-child{
-        padding: 14px 20px;
-        font-size: 12px;
     }
     .categories-content{
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
