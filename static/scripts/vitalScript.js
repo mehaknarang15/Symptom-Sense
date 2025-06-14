@@ -13,6 +13,8 @@ menu.onclick = () => {
 };
 
 window.onscroll = () => {
-    menu.classList.remove('bx-x');
-    navbar.classList.remove('open');
+    if (menu.classList.contains('bx-x')) {
+        menu.classList.remove('bx-x');
+        navbar.classList.remove('open');
+    }
 };
