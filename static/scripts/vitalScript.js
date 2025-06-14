@@ -11,12 +11,7 @@ menu.onclick = () => {
     navbar.classList.toggle('open');
 };
 
-window.onscroll = () => {
-    menu.classList.remove('bx-x');
-    navbar.classList.remove('open');
-};
-
-// Close navbar when any nav link is clicked
+// Close menu when any nav link is clicked
 const navLinks = document.querySelectorAll('.navbar a');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
