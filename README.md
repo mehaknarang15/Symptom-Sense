@@ -29,8 +29,8 @@ SymptomSense is a comprehensive AI-powered health and education platform that ai
 
 | Feature | Description |
 |--------|-------------|
-| **🧬 HealthLens AI** | Analytics-driven insights on health trends and preventive care |
-| **🔍 Health Quest** | AI-driven symptom checker offering preliminary diagnostics and recommendations |
+| **🧬 HealthLens AI** | AI-driven symptom checker offering preliminary diagnostics and recommendations |
+| **🔍 Health Quest** | Interactive health challenges with streak tracking and custom goals to promote daily wellness |
 | **💊 MediTrack** | Track medications, set reminders, understand dosage and side effects |
 | **🧘 MindMate** | Mental health chatbot for wellness tracking, mood analysis, and stress relief |
 | **📍 CareConnect** | Locate nearby hospitals and clinics, with real-time booking options |

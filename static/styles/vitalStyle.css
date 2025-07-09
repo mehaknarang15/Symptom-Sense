@@ -59,18 +59,20 @@ section {
     margin-bottom: 48px;
 }
 
-.home-img {
+/* .home-img {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .home-img img {
-    height: auto;
+    width: 90%
+    
+/*     height: auto;
     width: auto;
     max-height: 100%;
     object-fit: contain;
-    object-position: center;
+    object-position: center; */
 }
 /* Latter Form */
 .latter form {
