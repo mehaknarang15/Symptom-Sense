@@ -7,7 +7,7 @@
 
 body, html {
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 #main{
     background: url('../images/bg2.jpg') ;
@@ -100,25 +100,138 @@ body, html {
     background: #004d99 !important;
 }
 
-@media (max-height: 600px) {
-    
-    .map-info {
-        padding: 5px; /* Add some padding even on small screens */
+/* Position filter container BELOW the map controls */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+}
+
+/* Style for each filter button */
+.filter-button {
+    padding: 8px 14px;
+    font-size: 12px;
+    background-color: #f0f0f0;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Highlight selected filter */
+.filter-button.active {
+    background-color: #4BA3DA;
+    color: white;
+}
+.gm-style .gm-style-mtc {
+  font-size: 12px !important;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .main {
+        padding: 10px 15px;
+        height: auto;
     }
-    
+    html, body {
+  overflow-x: hidden;
+  max-height: 100vh;
+}
+
+    .main-text {
+        margin-bottom: 10px;
+    }
+
+    .main-text h1 {
+        font-size: 22px;
+    }
+
     .main-text p {
-        font-size: 13px;
+        font-size: 14px;
     }
-    
-    .map-info {
-        padding: 0px;
-    }
-    
-    .legend-item {
-        font-size: 15px;
-    }
-    
+
     #frame {
-        max-height: calc(100vh - 220px);
+        min-height: 250px;
+        max-height: none;
+        height: auto;
+        width: 100%;
+        margin-bottom: 10px;
     }
+
+    .map-info {
+        margin-top: 0;
+        padding: 10px;
+    }
+
+    .map-legend {
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 3px;
+    }
+
+    .legend-item {
+        font-size: 12px;
+        gap: 3px;
+    }
+
+    .legend-color {
+        width: 10px;
+        height: 10px;
+    }
+
+    .main-text .cta-button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    
+    .map {
+        height: auto;
+    }
+
+    .filter-container {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 4px;
+        padding: 3px 3px;
+        background-color: #fff;
+        font-size: 10px;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+        margin-bottom: 0;
+        margin-top: 0;
+        width: 100%;
+        overflow-x: auto;
+        padding: 8px 6px;
+    }
+
+    .filter-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    }
+
+    #map {
+        height: 300px !important;
+    }
+}
+
+/* Ensure fullscreen button stays bottom-left on all screens */
+.gm-fullscreen-control {
+    bottom: 12px !important;
+    top: auto !important;
+    /* left: 12px !important; */
+    right: auto !important;
 }

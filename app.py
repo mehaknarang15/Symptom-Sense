@@ -141,3 +141,4 @@ def google_maps_proxy():
     except Exception as e:
         app.logger.error(f"Error proxying Google Maps API: {str(e)}")
         return "console.error('Failed to load Google Maps');", 500, {'Content-Type': 'application/javascript'}
+

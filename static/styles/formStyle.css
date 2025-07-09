@@ -148,8 +148,8 @@
   div[id$="Section"] {
     background-color: var(--primary-light);
     border-radius: var(--border-radius);
-    padding: 1rem 1.5rem !important;
-    margin: 1rem 0 1.5rem 0 !important;
+    padding: 1rem 1rem !important;
+    margin: 1rem 0 1rem 0 !important;
     border-left: 4px solid var(--primary) !important;
     transition: transform 0.3s ease;
   }
@@ -210,10 +210,22 @@
       margin: 1rem !important;
       padding: 1.5rem !important;
     }
-    
+    form h1{
+      font-size:1.5rem;
+    }
+    form h2{
+      font-size: 1rem;
+    }
+    form h3{
+      font-size:0.8rem;
+    }
+    input[type="submit"]{
+      font-size: 1rem;
+    }
     label {
       display: block;
       margin: 0.5rem 0;
+      font-size: 0.8rem;
     }
     
     .tooltip .tooltiptext {
@@ -223,4 +235,5 @@
       top: 100%;
       margin-top: 5px;
     }
-  }
+
+}

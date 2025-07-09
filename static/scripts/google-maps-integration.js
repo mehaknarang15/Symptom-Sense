@@ -20,7 +20,11 @@ function initMap() {
   const frameElement = document.getElementById('frame');
   const mapContainer = document.createElement('div');
   mapContainer.id = 'map';
-  mapContainer.style.height = '500px';
+  // mapContainer.style.height = '500px';
+  mapContainer.style.minHeight = '350px';
+  mapContainer.style.height = '100%';
+  mapContainer.style.maxHeight = '90vh';
+
   mapContainer.style.width = '100%';
   mapContainer.style.borderRadius = '8px';
   mapContainer.style.border = '2px solid #4BA3DA';
@@ -35,8 +39,11 @@ function initMap() {
     center: center,
     zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    mapTypeControl: true,
+    mapTypeControl: window.innerWidth > 768, // disable map type control on mobile
     fullscreenControl: true,
+    fullscreenControlOptions: {
+  position: google.maps.ControlPosition.LEFT_BOTTOM
+},
     streetViewControl: false,
     mapTypeControlOptions: {
       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -499,9 +506,9 @@ function addFilterControls(map) {
   filterContainer.style.padding = '10px';
   filterContainer.style.borderRadius = '8px';
   filterContainer.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-  filterContainer.style.margin = '10px';
-  filterContainer.style.display = 'flex';
-  filterContainer.style.gap = '10px';
+  // filterContainer.style.margin = '10px';
+  // filterContainer.style.display = 'flex';
+  // filterContainer.style.gap = '10px';
   
   // Create filter buttons
   const facilityTypes = [
@@ -515,21 +522,32 @@ function addFilterControls(map) {
     const button = document.createElement('button');
     button.id = `filter-${type.id}`;
     button.textContent = type.label;
-    button.style.padding = '4px 8px'; // Reduced from 8px 12px
-    button.style.fontSize = '12px'; // Added font size
-    button.style.margin = '0';
-    button.style.backgroundColor = type.id === 'all' ? '#4BA3DA' : '#f0f0f0';
-    button.style.color = type.id === 'all' ? 'white' : 'black';
-    button.style.border = 'none';
-    button.style.borderRadius = '4px';
-    button.style.cursor = 'pointer';
+    // button.style.padding = '4px 8px'; // Reduced from 8px 12px
+    // button.style.fontSize = '12px'; // Added font size
+    // button.style.margin = '0';
+    // button.style.backgroundColor = type.id === 'all' ? '#4BA3DA' : '#f0f0f0';
+    // button.style.color = type.id === 'all' ? 'white' : 'black';
+    // button.style.border = 'none';
+    // button.style.borderRadius = '4px';
+    // button.style.cursor = 'pointer';
+    button.className = 'filter-button';
+if (type.id === 'all') {
+  button.classList.add('active');
+}
+
     
     // Add click event
     button.addEventListener('click', function() {
       // Update button styles
       facilityTypes.forEach(t => {
-        document.getElementById(`filter-${t.id}`).style.backgroundColor = t.id === type.id ? '#4BA3DA' : '#f0f0f0';
-        document.getElementById(`filter-${t.id}`).style.color = t.id === type.id ? 'white' : 'black';
+        // document.getElementById(`filter-${t.id}`).style.backgroundColor = t.id === type.id ? '#4BA3DA' : '#f0f0f0';
+        // document.getElementById(`filter-${t.id}`).style.color = t.id === type.id ? 'white' : 'black';
+        facilityTypes.forEach(t => {
+        const btn = document.getElementById(`filter-${t.id}`);
+        btn.classList.remove('active');
+      });
+      button.classList.add('active');
+
       });
       
       // Filter markers
@@ -547,6 +565,18 @@ function addFilterControls(map) {
     filterContainer.appendChild(button);
   });
   
-  // Position the filter at the top right of the map
+  // Position filters based on screen width
+const mapWrapper = document.getElementById('map');
+if (window.innerWidth <= 768) {
+  // Place filter container ABOVE the map
+  if (mapWrapper && mapWrapper.parentNode) {
+    mapWrapper.parentNode.insertBefore(filterContainer, mapWrapper);
+  }
+} else {
+  // Desktop: insert into map
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(filterContainer);
+}
+
+
+
 }

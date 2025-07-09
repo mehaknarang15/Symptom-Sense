@@ -1,25 +1,25 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background-color: #e6f3ff !important;
-    color: #333;
-} 
+    color: #333 !important;
+}
 
-.medicontainer {
-    margin: 20px auto;
+.container {
+    margin: 30px auto !important;
     background: white;
-    padding: 35px;
+    padding: 20px;
     border-radius: 16px;
     max-width: 85%;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 h1 {
-    color: #0b5394  !important;
-    font-size: 2.8rem  !important;
-    margin-bottom: 10px  !important;
-    text-align: center  !important;
+    color: #0b5394;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 p {
@@ -97,7 +97,7 @@ button:active {
 }
 
 .results {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .medicine-card {
@@ -125,10 +125,8 @@ button:active {
 }
 
 .medicine-details {
-    margin-left: 12px;
+    margin-left: 10px;
 }
-
-/* Add these styles to your CSS */
 .medicine-details p {
     display: flex;
     margin: 8px 0;
@@ -138,8 +136,9 @@ button:active {
 .property-label {
     font-weight: 600;
     color: #2e8b57;
-    flex: 0 0 110px; /* Fixed width for all labels */
+    flex: 0 0 120px; /* Fixed width for all labels */
     text-align: left;
+    margin-right: 3px;
 }
 
 .property-value {
@@ -155,4 +154,61 @@ button:active {
     background-color: #ffebee;
     border-radius: 8px;
     margin-top: 20px;
+}
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        max-height: 100vh;
+        }
+
+    .search-container {
+        flex-direction: column;
+        align-items:center;
+        padding: 10px;
+    }
+
+    label {
+        margin-bottom: 8px;
+        font-size: 1rem;
+        text-align: left;
+    }
+    .property-label {
+    flex: 0 0 90px; 
+    margin-right: 8px;
+}
+    input[type="text"] {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .medicontainer, .container {
+        width: 100%;
+        padding: 10px !important;
+    }
+
+
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    p {
+        font-size: 1rem;
+        padding: 0 5px;
+    }
+
+    .medicine-name {
+        font-size: 1.2rem;
+    }
+    .medicine-details {
+    margin: 8px;
+}
+    .medicine-card{
+        padding: 10px;
+    }
 }
