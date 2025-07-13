@@ -1,16 +1,30 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vitalStyle.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-{% block title %}SymptomSense{% endblock %}
-{% block extra_styles %}
-{% endblock %}
-
-{% block content %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/vitalStyle.css') }}">
-<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <script>
+        // Load navigation first
+        fetch("static/nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+                
+                // Call function after the nav is inserted
+                // adjustContainerMargin();
+            })
+            .catch(error => console.error("Error loading the navigation:", error));
+</script>
 <!-- start home section -->
 <section class="home" id="home">
     <div class="home-text">
@@ -225,8 +239,6 @@
         <a href="#" class="btn">Read More</a>
     </div>
 </section>
-
-{% block extra_scripts %}
 <script src="{{ url_for('static', filename='scripts/vitalScript.js') }}"></script>
-{% endblock %}
-{% endblock %}
+</body>
+</html>

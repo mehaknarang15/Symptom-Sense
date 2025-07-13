@@ -202,7 +202,7 @@ body, html {
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
-        gap: 4px;
+        gap: auto;
         padding: 3px 3px;
         background-color: #fff;
         font-size: 10px;

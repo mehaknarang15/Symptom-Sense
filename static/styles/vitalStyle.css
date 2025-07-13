@@ -22,6 +22,9 @@ body {
     background: var(--bg-color);
     color: var(--text-color);
 }
+#nav-placeholder{
+  width:100%;
+}
 
 section {
     padding: 80px 13%;

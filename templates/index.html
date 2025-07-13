@@ -1,19 +1,33 @@
-{% extends 'base.html' %}
-
-{% block title %}SymptomSense{% endblock %}
-{% block extra_styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
-<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- Linking Google fonts for items -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-<!-- Linking SwiperJS CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymptomSense</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Linking Google fonts for items -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Linking SwiperJS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <script>
+        // Load navigation first
+        fetch("static/nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+                
+                // Call function after the nav is inserted
+                // adjustContainerMargin();
+            })
+            .catch(error => console.error("Error loading the navigation:", error));
+</script>
     <!-- HOME SECTION -->
     <section class="home" id="home">
         <div class="home-text">
@@ -134,9 +148,7 @@
         </div>
     </section>
 
-    {% block extra_scripts %}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    {% endblock %}
 
 
     <!-- ABOUT SECTION -->
@@ -147,31 +159,30 @@
 
         <div class="about-text">
             <h2>About Us</h2>
-            <p>At SymptomSense, we harness AI to make healthcare smarter, more accessible, and engaging. Our platform provides AI-driven symptom analysis, offering preliminary health insights by cross-referencing medical databases.
-                We integrate mental health support with an AI chatbot, mood tracking, and stress management tools. Users can also access medicine information, menstrual tracking, and wellness challenges to stay informed and proactive about their health.
-                Beyond diagnosis, our community-driven approach allows users to share health experiences, while clinics and professionals provide verified insights. We also offer certifications in health education, helping users learn and grow.
-                With features like voice search and location-based clinic recommendations, we ensure accessibility for all, including those with disabilities. Whether you're seeking medical guidance, mental wellness support, or an interactive health community, SymptomSense is your trusted AI-powered healthcare companion.
-                <br><br>
-                🚀 Join us in shaping the future of digital healthcare!
+            <p>SymptomSense is an AI-powered healthcare platform that offers smart symptom analysis, 
+                mental health support through an AI chatbot, and a comprehensive medicine guide. 
+                Users can track menstrual and wellness cycles, find nearby clinic,hospitals and pharmacies
+                and earn health certifications through trusted courses. With engaging wellness challenges 
+                and a supportive health community, SymptomSense makes personalized, accessible healthcare easy for everyone.
             </p>
-            
-            <a href="#" class="btn">Read More</a>
+<!--             
+            <a href="#" class="btn">Read More</a> -->
         </div>
     </section>
 
     <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <div class="main-contact">
-            <div class="contact-content">
+            <!-- <div class="contact-content">
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
                 <li><a href="#">Twitter</a></li>
-            </div>
+                <li><a href="#">Whatsapp</a></li>
+            </div> -->
 
             <div class="contact-content">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Category</a></li>
-                <li><a href="#">Courses</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </div>
@@ -180,21 +191,20 @@
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Login</a></li>
                 <li><a href="#">Register</a></li>
-                <li><a href="#">Instructor</a></li>
                 <li><a href="#">Dashboard</a></li>
             </div>
-<!-- 
             <div class="contact-content">
-                <li><a href="#">India,<br> New Delhi, CA 94108</a></li>
+                <li><a href="#">New Delhi,India</a></li>
                 <li><a href="#">abc@gmail.com</a></li>
                 <li><a href="#">7368081739</a></li>
-            </div> -->
+            </div> 
         </div>
     </section>
     
     <div class="last-text">
         <p> 2025 SymptomSense. All rights reserved.</p>
     </div>
-{% endblock %}
+</body>
+</html>
 
 

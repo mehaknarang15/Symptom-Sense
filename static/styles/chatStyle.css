@@ -5,8 +5,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 #nav-placeholder{
-  margin:0;
-  padding:0;
+  width:100%;
 }
 .response-message ul,
 .response-message ol,
@@ -25,6 +24,7 @@ body {
   background-color: #f0f8ff; /* Light blue background */
   color: #333;
   display: flex;
+  height:100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -35,13 +35,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 10px;
+  padding-bottom: 100px;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 140, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  height: 100vh;
 }
 
 /* Title styling */
@@ -69,16 +70,18 @@ body {
 
 /* Chat section */
 #chat-section {
-  flex: 1;
+  flex: 1 ;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 20px;
-  overflow-y: auto;
+  overflow: hidden;
   background-color: #f9fcff;
   width: 100%;
   word-wrap: break-word;
+  height: auto; 
 }
+
 
 .user-message,
 .response-message {

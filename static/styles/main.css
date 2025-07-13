@@ -1,74 +1,89 @@
-/* Importing Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
-:root{
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', "Inter", sans-serif;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+:root {
     --bg-color: #ffffff;
     --text-color: #22100d;
     --second-color: #685f78;
-    --main-color: #f66962; 
+    --main-color: #f66962;
     --big-font: 2.8rem;
     --h2-font: 2.6rem;
     --p-font: 1.1rem;
 }
-body{
+
+body {
     background: var(--bg-color);
     color: var(--text-color);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 70vh;
+    /* background: linear-gradient(#ECEFFE, #CED6FB); */
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
     padding: 0;
+
 }
-#menu-icon{
-    font-size: 34px;
-    color: var(--main-color);
-    z-index: 10001;
-    cursor: pointer;
-    display: none;
-}
-section{
+
+section {
     padding: 80px 13%;
 }
-.home{
+
+.home {
     position: relative;
     height: 100vh;
     width: 100%;
     background: url(../images/lab.jpeg);
     background-size: cover;
     background-position: center;
-    
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    
     align-items: center;
+
     margin-bottom: 0;
+    /* Adjust this value as needed */
     padding-bottom: 0;
+    /* Add some padding to create space */
 }
-.home-text h1{
+
+.home-text h1 {
     font-size: var(--big-font);
-    margin: 15px 0 15px;    
+    margin: 15px 0 15px;
 }
-.home-text h6{
+
+.home-text h6 {
     color: var(--main-color);
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 2px;
 }
-.home-text p{
+
+.home-text p {
     color: var(--second-color);
     font-size: var(--p-font);
     font-weight: 500;
     margin-bottom: 48px;
 }
-.latter form{
+
+.latter form {
     width: 100%;
     max-width: 460px;
     position: relative;
 }
-.latter form input:first-child{
+
+.latter form input:first-child {
     display: inline-block;
     width: 100%;
     outline: none;
@@ -76,7 +91,8 @@ section{
     border: 2px solid var(--main-color);
     border-radius: 30px;
 }
-.latter form input:last-child{
+
+.latter form input:last-child {
     position: absolute;
     display: inline-block;
     border: none;
@@ -89,18 +105,21 @@ section{
     top: 2px;
     right: 1px;
 }
+
 .home-img img {
-    height: 560px;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center;
+    height: fit-content;
+    width: 100%;
+    height: 657px;
+
 }
 
-.main-btn{
+
+.main-btn {
     text-align: left;
     margin-top: 1rem;
 }
-.btn{
+
+.btn {
     display: inline-block;
     padding: 16px 30px;
     font-size: var(--p-font);
@@ -109,15 +128,18 @@ section{
     color: var(--bg-color);
     border-radius: 30px;
     transition: all .40s ease;
-}
-.btn:hover{
+} 
+.btn:hover {
     transform: scale(0.9) translateY(-5px);
 }
+
+
 
 /* Features Section Styles */
 .features {
     background: linear-gradient(#afd4db, #fefeff);
     padding: 60px 5%;
+    margin: 0;
 }
 
 .features-container {
@@ -222,9 +244,31 @@ section{
     padding-bottom: 60px; /* Increased padding to accommodate the button */
 }
 
+
+/* Slider Section Styles */
+.features {
+    padding: 0;
+    background: linear-gradient(#afd4db, #fefeff);
+    margin-top: 0;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding-top: 40px;
+    /* Add some top padding if needed */
+    padding-bottom: 40px;
+    clear: both;
+    /* Ensure it starts on a new line */
+}
+
+.features .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
 /* ABOUT SECTION */
-.about{
-    background: url(../images/bg.jpg);
+.about {
+    background: url(../images/bg2.jpg);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -232,94 +276,217 @@ section{
     gap: 2rem;
     align-items: center;
 }
-.about-img img{
+
+.about-img img {
     width: 100%;
     height: 500px;
-    max-width: 700px; 
+    max-width: 700px;
     left: 0;
 }
-.about-text h2{
+
+.about-text h2 {
     font-size: var(--h2-font);
     line-height: 1.2;
     margin-bottom: 20px;
 }
-.about-text p{
+
+.about-text p {
     font-size: var(--p-font);
     color: var(--second-color);
     font-weight: 500;
     line-height: 30px;
     margin-bottom: 30px
 }
-.about-text h4{
+
+.about-text h4 {
     font-size: 20px;
     margin-bottom: 10px;
 }
-.about-text h5{
+
+.about-text h5 {
     font-size: 20px;
     margin-bottom: 40px;
 }
 
+
 /* CONTACT SECTION */
-.contact{
-    padding: 60px 13%;
+.contact {
+    padding: 30px 20%;
     background: linear-gradient(#fefeff, #d7eaee);
+    width:100%;
+    justify-content: center;
+    overflow-x: hidden;
 }
-.main-contact{
+
+.main-contact {
     display: flex;
     grid-template-columns: repeat(auto-fit, minmax(200px, auto));
     gap: 15rem;
 }
+
 .contact-content {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 500px;
-    width: 100%;
+    align-items: flex-start;
 }
-.contact-content li{
+
+.contact-content li {
     margin-bottom: 18px;
 }
-.contact-content li a{
+
+.contact-content li a {
     display: block;
     color: var(--main-color);
     font-weight: 500;
     font-size: 15px;
     transition: all .40 ease;
 }
-.last-text p{
+
+.contact-content li a:hover {
+    transform: translateY(10px);
+    color: var(--main-color);
+}
+
+.last-text p {
     text-align: center;
     padding: 18px;
     color: var(--second-color);
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 1px;
+
+}
+#nav-placeholder {
+    width: 100%;
 }
 
+
 @media screen and (max-width: 768px) {
-    .features-grid {
-        grid-template-columns: 1fr;
+    header {
+        flex-wrap: wrap;
+        padding: 15px 8%;
     }
+
     .card-wrapper {
         margin: 0 10px 25px;
     }
-    .features {
-        margin-top: 0;
-        padding: 80px 13% 40px;
+
+    .card-wrapper .swiper-slide-button {
+        display: none;
     }
+
+    /* .buttons {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+        align-items: center;
+        gap: 10px;
+    } */
+
     .home {
-        height: auto;
-        grid-template-columns: 1fr;
-        padding: 80px 13% 40px;
-    }
-    .main-contact {
+        display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
+        height: auto;
+        padding: 80px 5% 40px;
+        background-position: center;
+        background-size: cover;
+        gap: 2rem;
+        padding-bottom: 20px;
+        /* less padding at the bottom */
     }
-    .contact-content {
-        align-items: center;
+
+    .home-text {
+        width: 100%;
+    }
+
+    .home-text h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .home-text p {
+        font-size: 1rem;
         margin-bottom: 20px;
     }
+
+    .main-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        /* Reduced gap */
+    }
+
+    .home-img img {
+        width: 90vw;
+        height: auto;
+        max-width: 100%;
+        object-fit: contain;
+        display: block;
+        margin: 0;
+        /* Remove margin to pull it up */
+        padding-top: 0;
+    }
+
+
+
+    .features {
+        padding: 60px 5%;
+        margin-bottom: 0;
+    }
+
+    .about {
+        flex-direction: column;
+        padding-top: 20px;
+        margin-top: 0;
+        padding-bottom: 20px;
+        margin-bottom: 0;
+    }
+
+    .about-text {
+        text-align: justify;
+    }
+
+    .about-text h2 {
+        font-size: 1.6rem;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+    }
+
+    /* .about .btn {
+        margin-bottom: 10px;
+    } */
+
+    .contact {
+        padding-top: 20px;
+        padding: 30px;
+        margin: 20px;
+    }
+
+    .main-contact {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding:0;
+        margin:0;
+        justify-content: center;
+    }
+
+    .contact-content {
+        align-items: flex-start;
+        margin-bottom: 0;
+    }
+
     .contact-content li a {
-        text-align: center;
+        font-size: 10px;
+        line-height: 1.4;
+    }
+    .last-text p{
+        font-size: 10px;
+        overflow: hidden;
     }
 }
