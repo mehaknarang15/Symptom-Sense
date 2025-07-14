@@ -1,0 +1,124 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+const chatContainer = document.getElementById("chat-section");
+const promptInput = document.getElementById("prompt");
+const generateBtn = document.getElementById("submit-button");
+const imageUploader = document.getElementById("imageUploader");
+const fileLabel = document.getElementById("file-label");
+
+// Show filename when file is selected
+imageUploader.addEventListener('change', function() {
+    if (this.files.length > 0) {
+        fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> ' + this.files[0].name;
+        fileLabel.classList.add('file-selected');
+    } else {
+        fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> Attach';
+        fileLabel.classList.remove('file-selected');
+    }
+});
+
+async function initializeChat() {
+    try {
+        promptInput.disabled = false;
+        generateBtn.disabled = false;
+        addMessage("Hi there! I'm SymptomSense Mind Mate. How can I help you today?", "response-message");
+    } catch (error) {
+        console.error("Failed to initialize chat:", error);
+        addMessage("Failed to initialize the chatbot. Please try again later.", "response-message");
+    }
+}
+
+async function sendPrompt(promptParts) {
+    const response = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptParts })
+    });
+    const data = await response.json();
+    return data.response || "No response from server.";
+}
+
+function addMessage(text, className, messageDiv = null) {
+    if (messageDiv === null) {
+        messageDiv = document.createElement("div");
+        chatContainer.appendChild(messageDiv);
+    }
+    messageDiv.className = className;
+    messageDiv.innerHTML = marked.parse(text);
+
+    if (className === "response-message") {
+        const codeBlocks = messageDiv.querySelectorAll('pre code');
+        codeBlocks.forEach((block) => {
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-button';
+            copyBtn.textContent = 'Copy code';
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(block.textContent);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy code';
+                }, 2000);
+            });
+            block.parentNode.insertBefore(copyBtn, block);
+        });
+    }
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    return messageDiv;
+}
+
+async function generateResult(promptParts) {
+    const thinkingDiv = document.createElement("div");
+    thinkingDiv.className = "response-message thinking";
+    thinkingDiv.innerHTML = '<div class="thinking-dots"><span></span><span></span><span></span></div>';
+    chatContainer.appendChild(thinkingDiv);
+
+    const responseText = await sendPrompt(promptParts);
+
+    chatContainer.removeChild(thinkingDiv);
+    addMessage(responseText, "response-message");
+}
+
+generateBtn.addEventListener("click", async () => {
+    const userPrompt = promptInput.value.trim();
+    if (!userPrompt) return;
+
+    const prompt = [{ text: userPrompt }];
+    addMessage(userPrompt, "user-message");
+    promptInput.value = "";
+
+    if (imageUploader.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const base64 = reader.result.split(",")[1];
+            prompt.push({
+                inline_data: {
+                    data: base64,
+                    mime_type: imageUploader.files[0].type,
+                }
+            });
+            imageUploader.value = '';
+            fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> Attach';
+            fileLabel.classList.remove('file-selected');
+            generateResult(prompt);
+        };
+        reader.readAsDataURL(imageUploader.files[0]);
+    } else {
+        generateResult(prompt);
+    }
+});
+
+promptInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        generateBtn.click();
+    }
+});
+
+promptInput.addEventListener('input', function () {
+    this.style.height = 'auto';
+    const maxHeight = 150;
+    this.style.height = (this.scrollHeight < maxHeight ? this.scrollHeight : maxHeight) + 'px';
+});
+
+window.addEventListener('DOMContentLoaded', initializeChat);

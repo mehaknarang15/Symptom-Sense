@@ -1,0 +1,187 @@
+const healthChallenges = [
+    "Drink 8 glasses of water 💧",
+    "Walk 5,000 steps 🚶‍♂️",
+    "Eat a fruit 🍎",
+    "Do 10 minutes of stretching 🧘",
+    "Sleep at least 7 hours 😴",
+    "Limit sugar intake 🍬",
+    "Take deep breaths for 5 mins 🌿"
+];
+
+const mentalChallenges = [
+    "Mindful Breathing 🌬️",
+    "Digital Detox 📵",
+    "Positive Affirmations 😊",
+    "Journaling 📝",
+    "Meditation 🧘",
+    "Connect with a Loved One 💬",
+    "Go Outside 🌿",
+    "Limit Negative News 📺",
+    "Laugh or Smile 😂",
+    "Declutter a Space 🏡",
+    "Listen to Music or a Podcast 🎵",
+    "Set Small Goals ✅",
+    "Do a Creative Activity 🎨"
+];
+
+// Variable to track if celebration was already shown today
+let celebrationShown = false;
+
+function loadChallenges() {
+    const healthList = document.getElementById("healthChallengeList");
+    const mentalList = document.getElementById("mentalChallengeList");
+    const customList = document.getElementById("customChallengeList");
+
+    healthList.innerHTML = "";
+    mentalList.innerHTML = "";
+    customList.innerHTML = "";
+
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+
+    [...healthChallenges].forEach((challenge, index) => {
+        let challengeDiv = createChallengeElement(challenge, "health", index);
+        healthList.appendChild(challengeDiv);
+    });
+
+    [...mentalChallenges].forEach((challenge, index) => {
+        let challengeDiv = createChallengeElement(challenge, "mental", index);
+        mentalList.appendChild(challengeDiv);
+    });
+
+    storedChallenges.custom.forEach((challenge, index) => {
+        let challengeDiv = createChallengeElement(challenge, "custom", index, true);
+        customList.appendChild(challengeDiv);
+    });
+    
+    updateProgress();
+}
+
+function createChallengeElement(challenge, type, index, isCustom = false) {
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+    let completedChallenges = storedChallenges.completed || [];
+
+    let challengeDiv = document.createElement("div");
+    challengeDiv.classList.add("challenge");
+    if (completedChallenges.includes(`${type}-${index}`)) {
+        challengeDiv.classList.add("completed");
+    }
+    challengeDiv.innerHTML = `
+        <label>
+            <input type="checkbox" onchange="completeChallenge('${type}', ${index})" ${completedChallenges.includes(`${type}-${index}`) ? "checked" : ""}>
+            ${challenge}
+        </label>
+        ${isCustom ? `<button class="remove-btn" onclick="removeCustomChallenge(${index})">✖</button>` : ""}
+    `;
+    return challengeDiv;
+}
+
+function completeChallenge(type, index) {
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+
+    if (!storedChallenges.completed) storedChallenges.completed = [];
+
+    let key = `${type}-${index}`;
+    if (storedChallenges.completed.includes(key)) {
+        storedChallenges.completed = storedChallenges.completed.filter(i => i !== key);
+    } else {
+        storedChallenges.completed.push(key);
+    }
+
+    localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+    loadChallenges();
+}
+
+function addCustomChallenge() {
+    let challengeText = document.getElementById("customChallenge").value.trim();
+    if (challengeText === "") {
+        alert("Please enter a challenge to add.");
+        return;
+    }
+
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+    storedChallenges.custom.push(challengeText);
+    localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+
+    document.getElementById("customChallenge").value = "";
+    loadChallenges();
+}
+
+function removeCustomChallenge(index) {
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+    
+    // Also remove from completed if it exists
+    let keyToRemove = `custom-${index}`;
+    if (storedChallenges.completed) {
+        storedChallenges.completed = storedChallenges.completed.filter(key => key !== keyToRemove);
+    }
+    
+    storedChallenges.custom.splice(index, 1);
+    localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+    loadChallenges();
+}
+
+function resetChallenges() {
+    if (confirm("Are you sure you want to reset your progress for today?")) {
+        let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+        storedChallenges.completed = [];  // Only reset completion, keep custom challenges
+        localStorage.setItem("dailyChallenges", JSON.stringify(storedChallenges));
+        celebrationShown = false; // Reset celebration flag
+        loadChallenges();
+    }
+}
+
+function updateProgress() {
+    let storedChallenges = JSON.parse(localStorage.getItem("dailyChallenges")) || { health: [], mental: [], custom: [], completed: [] };
+    let completedCount = storedChallenges.completed.length;
+    let totalChallenges = healthChallenges.length + mentalChallenges.length + (storedChallenges.custom ? storedChallenges.custom.length : 0);
+    
+    let progressPercent = totalChallenges > 0 ? Math.round((completedCount / totalChallenges) * 100) : 0;
+    
+    document.getElementById("progress-text").textContent = `Your daily progress: ${progressPercent}%`;
+    document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+    
+    // Show celebration when 100% is reached and not shown yet today
+    if (progressPercent === 100 && !celebrationShown && totalChallenges > 0) {
+        showCelebration();
+        celebrationShown = true;
+    }
+}
+
+function showCelebration() {
+    const celebration = document.getElementById('celebration');
+    celebration.classList.add('celebration-active');
+    
+    // Add confetti effect
+    for (let i = 0; i < 50; i++) {
+        createConfetti();
+    }
+}
+
+function closeCelebration() {
+    const celebration = document.getElementById('celebration');
+    celebration.classList.remove('celebration-active');
+    
+    // Remove all confetti elements
+    document.querySelectorAll('.confetti').forEach(el => el.remove());
+}
+
+function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    confetti.style.animationDelay = Math.random() * 2 + 's';
+    
+    // Random color
+    const colors = ['#ff5252', '#ffeb3b', '#2196f3', '#4caf50', '#e040fb', '#ff9800'];
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    document.querySelector('.celebration-message').appendChild(confetti);
+    
+    // Remove confetti after animation
+    setTimeout(() => {
+        confetti.remove();
+    }, 5000);
+}
+
+window.onload = loadChallenges;

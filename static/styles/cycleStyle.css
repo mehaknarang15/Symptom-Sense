@@ -1,0 +1,347 @@
+:root {
+    --primary-blue: #1a73e8;
+    --secondary-blue: #4285f4;
+    --light-blue: #e8f0fe;
+    --dark-blue: #174ea6;
+    --hover-blue: #cfe1fd;
+    
+    --menstruation: #7986cb;
+    --predicted: #9fa8da;
+    --ovulation: #5c6bc0;
+    --fertile: #7e57c2;
+    --accent: #b39ddb;
+    
+    --nav-bg: #4BA3DA;
+    --button-bg: black;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+.header {
+    background-color: white;
+    border-bottom: 1px solid #dadce0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 15px 20px;
+}
+
+body {
+    padding: 0 ;
+    margin:0;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #e8f0fe 0%, #d4d7f2 100%) ;
+    color: #202124 ;
+    height: 100vh ;
+    overflow-x: hidden ;
+    display: flex ;
+    flex-direction: column;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px); 
+    overflow: hidden;
+}
+.sidebar {
+    width: 320px;
+    background: white;
+    padding: 20px;
+    border-right: 1px solid #dadce0;
+    overflow-y: auto;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.header h1 {
+    color: var(--primary-blue);
+    font-size: 20px;
+    margin: 0;
+}
+
+.panel {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+}
+
+h2 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+h3 {
+    color: var(--dark-blue);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--light-blue);
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #5f6368;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    border: 2px solid #dadce0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    margin-bottom: 12px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+button {
+    background: var(--primary-blue);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 15px 0 5px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+#tipsContainer{
+    margin-bottom: 0;
+}
+
+button:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.calendar-month {
+    border: 1px solid #dadce0;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    flex: 1;
+    min-width: 280px;
+    max-width: 320px;
+}
+
+.month-title {
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 10px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.weekday {
+    font-weight: 600;
+    color: #5f6368;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.day {
+    padding: 8px 3px;
+    border-radius: 6px;
+    background: #f8f9fa;
+    font-size: 13px;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.day:hover {
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.today {
+    border: 2px solid var(--primary-blue);
+    font-weight: bold;
+}
+
+.menstruation { 
+    background: var(--menstruation); 
+    color: white; 
+}
+
+.predicted-period { 
+    background: var(--predicted); 
+    color: white; 
+}
+
+.ovulation { 
+    background: var(--fertile); 
+    color: white; 
+}
+
+.ovulation-day { 
+    background: var(--ovulation); 
+    color: white; 
+    font-weight: bold; 
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.legend-box {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stat-box {
+    background: var(--light-blue);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #5f6368;
+    margin-top: 3px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.tip {
+    background: var(--light-blue);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+}
+
+.tip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.phase-menstrual .stat-value {
+    color: var(--menstruation);
+}
+
+.phase-ovulation .stat-value {
+    color: var(--ovulation);
+}
+
+.phase-luteal .stat-value {
+    color: var(--fertile);
+}
+
+.phase-follicular .stat-value {
+    color: var(--primary-blue);
+}
+
+#moodTip {
+    border-left-color: var(--menstruation);
+}
+
+#nutritionTip {
+    border-left-color: var(--ovulation);
+}
+
+#exerciseTip {
+    border-left-color: var(--fertile);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #dadce0;
+    }
+    
+    .content-area {
+        overflow-y: visible;
+    }
+    
+    body {
+        height: auto;
+        overflow: auto;
+    }
+}
