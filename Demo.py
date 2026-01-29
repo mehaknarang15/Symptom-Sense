@@ -39,11 +39,11 @@ def predict_disease_from_symptom(symptom_list):
     
     df_test = pd.DataFrame([symptoms])
 
-    model_artifacts = load("mnb_encoder.joblib")
+    model_artifacts = load("decision_tree_best_model.joblib")
     model = model_artifacts['model']
     label_encoder = model_artifacts['label_encoder']
 
-    model_artifacts2 = load("random_forest_encoder.joblib")
+    model_artifacts2 = load("random_forest_best_model.joblib")
     model2  = model_artifacts2['model']
     label_encoder2 = model_artifacts2['label_encoder']
 
